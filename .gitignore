@@ -1,0 +1,13 @@
+/public/i
+/app/config/config.php
+/cache
+/logs
+/tmp
+/vendor
+/public/.htpasswd
+/public/s
+.DS_Store
+.vagrant
+.idea
+/components
+/node_modules
