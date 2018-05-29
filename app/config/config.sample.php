@@ -8,6 +8,13 @@ defined('APP_PATH') || define('APP_PATH', BASE_PATH . '/app');
 
 return new \Phalcon\Config([
     'version' => '1.0',
+    'crc_secret_key' => 'kozlik_plyashet_sambo',
+
+    'domains'   => [
+        'default'   => 'tizer.local', // дефолтный для проекта
+        'tracking'  => 'tizer.local', // трекинг пиксели
+        'static'    => 'tizer.local', // раздача статики
+    ],
 
     'database' => [
         'adapter'  => 'Mysql',

@@ -19,10 +19,41 @@ class RelapTGB {
     // режим отладки
     public $debug;
 
-    function __construct($url, $debug = false) {
-        $this->url = $url;
+    public $sessionUuid = "";
 
+    public $cookie = "";
+
+    public $referrer = "unknown";
+
+    public $bidfloor = 0.1;
+
+    public $partner_id = "undefined";
+
+    function __construct($url, $debug = false) {
+
+        $this->url = $url;
         $this->debug = $debug;
+        $this->config = \Phalcon\DI\FactoryDefault::getDefault()->getShared('config');
+    }
+
+    public function setSession($string) {
+        $this->sessionUuid = $string;
+    }
+
+    public function setCookie($string) {
+        $this->cookie = $string;
+    }
+
+    public function setReferrer($url = "") {
+        $this->referrer = $url;
+    }
+
+    public function setBidfloor($price) {
+        $this->bidfloor = floatval($price);
+    }
+
+    public function setPartnerID($string) {
+        $this->partner_id = $string;
     }
 
 
@@ -31,7 +62,9 @@ class RelapTGB {
      *
      * @return array
      */
-    public function get() {
+    public function get($count = 1, $geo = 'RUS') {
+
+        $this->getParams($count, $geo);
 
         if ($this->debug) {
             echo '<pre> Запрашиваем на урл: '.$this->url;
@@ -66,7 +99,7 @@ class RelapTGB {
     }
 
     /**
-     * Конывертация в упрощенный формат
+     * Конвертация в упрощенный формат
      *
      * @param array $blocks
      * @return array
@@ -78,10 +111,11 @@ class RelapTGB {
                 $data = json_decode($b['adm'], true);
 
                 $return[] = [
-                    'tracking_pixel'    => $b['nurl'],
+                    'tracking_pixel'    => $this->trackUrl($b['nurl'],'imp'),
+                    'url'               => $this->trackUrl($data['native']['link']['url'], 'click'),
                     'price_cpc'         => floatval($b['price_cpc']),
                     'ecpm'              => floatval($b['price']),
-                    'url'               => $data['native']['link']['url'],
+
                 ];
 
                 $index = count($return)-1;
@@ -102,37 +136,41 @@ class RelapTGB {
         return $return;
     }
 
+    public function trackUrl($url, $action = "request") {
+
+        $params = [
+                'session'   => $this->sessionUuid,
+                'client'    => $this->cookie,
+                'url'       => $url,
+                'action'    => $action,
+                'partner'   => $this->partner_id,
+            ];
+
+        $params['crc']= md5( $this->config->crc_secret_key . ":{$params['url']}:{$params['session']}:{$params['client']}");
+
+        return "//" . $this->config->domains->tracking . "/tgb/track?" . http_build_query($params);
+    }
+
     /**
-     * @param $url урл страницы с которой теоритечески идет запрос
-     * @param $ip IP пользователя для которого идет запрос
      * @param int $count количество запрашиваемых блоков
-     * @param float $bidfloor минимальная ставка которую готовы забрать
      * @param string $geo трехсимвольный ГЕО
      * @return array - массив параметров для отправки
      */
-    public function getParams($url, $count = 1, $ip = null, $bidfloor = 0.1, $geo = 'RUS') {
+    public function getParams($count = 1, $geo = 'RUS', $ip = null) {
 
         if ($ip === null) {
-            if ($_SERVER['HTTP_CLIENT_IP']) {
-                $ip = $_SERVER['HTTP_CLIENT_IP'];
-            }
-            else if ($_SERVER['HTTP_X_FORWARDED_FOR']) {
-                $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
-            }
-            else if($_SERVER["HTTP_X_REAL_IP"]) {
-                $ip = $_SERVER["HTTP_X_REAL_IP"];
-            }
-            else if($_SERVER["REMOTE_ADDR"]) {
-                $ip = $_SERVER["REMOTE_ADDR"];
-            }
-            else {
-                $ip = '127.0.0.1';
-            }
+            $ip = self::getIp();
+        }
+        $ip = '92.100.230.106';
+
+        $url        = $this->referrer;
+        $pieces     = parse_url($url);
+        if($pieces['host']) {
+            $domain     = $pieces['host'];
+        } else {
+            $domain = '';
         }
 
-        $url        = $url;
-        $pieces     = parse_url($url);
-        $domain     = $pieces['host'];
 
         $request = [
             "native"    => [
@@ -165,7 +203,7 @@ class RelapTGB {
                 "id"            => $i,
                 "tagid"         => "rtb",
                 "bidfloorcur"   => "RUB",
-                "bidfloor"      => floatval($bidfloor),
+                "bidfloor"      => $this->bidfloor,
                 "secure"        => 1,
                 "native"        => [
                     "ver"           => "1.0.0.1",
@@ -193,4 +231,28 @@ class RelapTGB {
 
         return $this->params = $params;
     }
+
+    public static function getIp() {
+
+        if ($_SERVER['HTTP_CLIENT_IP']) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        }
+        else if ($_SERVER['HTTP_X_FORWARDED_FOR']) {
+            $ip = $_SERVER["HTTP_X_FORWARDED_FOR"];
+        }
+        else if($_SERVER["HTTP_X_REAL_IP"]) {
+            $ip = $_SERVER["HTTP_X_REAL_IP"];
+        }
+        else if($_SERVER["REMOTE_ADDR"]) {
+            $ip = $_SERVER["REMOTE_ADDR"];
+        }
+        else {
+            $ip = '92.100.230.106';
+        }
+
+        return $ip;
+
+    }
+
+
 }

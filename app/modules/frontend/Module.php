@@ -6,6 +6,8 @@ use Phalcon\Loader;
 use Phalcon\Mvc\View;
 use Phalcon\Mvc\View\Engine\Php as PhpEngine;
 use Phalcon\Mvc\ModuleDefinitionInterface;
+use Phalcon\Session\Adapter\Files as Session;
+
 
 class Module implements ModuleDefinitionInterface
 {
@@ -48,5 +50,24 @@ class Module implements ModuleDefinitionInterface
 
             return $view;
         });
+
+        $di->setShared(
+            'session',
+            function () {
+                $session = new Session();
+
+                $session->start();
+
+                return $session;
+            }
+        );
+
+        $di->set('crypt', function() {
+            $crypt = new \Phalcon\Crypt();
+            $crypt->setKey('ReallyRandomKey');
+            return $crypt;
+        });
+
+
     }
 }
