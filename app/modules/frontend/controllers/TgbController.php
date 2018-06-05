@@ -102,6 +102,7 @@ class TgbController extends \Phalcon\Mvc\Controller
     public function trackAction() {
 
         echo 'tgb/track';
+        exit;
         $params  = $this->request->get();
 
         if (!isset($params['partner'])) {
