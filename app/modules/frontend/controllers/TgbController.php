@@ -5,12 +5,18 @@ use \Tizer\Uuid as Uuid;
 
 class TgbController extends \Phalcon\Mvc\Controller
 {
+
+    public $partners = [
+        '50bd8c21bfafa6e4e962f6a948b1ef92' => 'fan',
+    ];
+
     public function initialize() {
 
         $partnerUUID = "";
         if ((new Uuid())->validate($this->request->get('partner_id'))) {
             $partnerUUID = $this->request->get('partner_id');
         }
+        $this->partner_id = $partnerUUID;
 
         // Уникальная сессис
         if ((new Uuid())->validate($this->request->get('session'))) {
@@ -46,10 +52,20 @@ class TgbController extends \Phalcon\Mvc\Controller
 
     }
 
+    /**
+     * Получение списка баннеров
+     */
     public function getAction()
     {
-        $tgb = new \Tizer\RelapTGB('https://relap.io/openrtb/2_3/videocapcinema/bid_request');
+        echo 'tgb/get';
+        exit;
+        if ($this->partner_id == "" || !isset($this->partners[$this->partner_id]) || !isset($_GET['callback'])) {
+            return json_encode(['response'=>'error']);
+        }
 
+        $tgb = new \Tizer\RelapTGB('https://relap.io/openrtb/2_3/videocapcinema/bid_request'
+            //,true
+        );
 
         if ($url = $this->request->getQuery('url')) {
             $tgb->setReferrer($url);
@@ -57,15 +73,40 @@ class TgbController extends \Phalcon\Mvc\Controller
 
         $tgb->setSession($this->sessionUUID);
         $tgb->setCookie($this->clientUuid);
-        $tgb->setPartnerID(md5('fan'));
+        $tgb->setPartnerID($this->partner_id);
+        $tgb->setBidfloor(0.0001);
+
+        $count = 2;
+        if ($this->request->has('count')) {
+            $count = intval($this->request->get('count'));
+        }
+        if ($count > 10 ) {
+            $count = 10;
+        }
 
         $blocks = $tgb->get(4);
 
-        $this->view->pick('tgb/default');
-
+        $this->view->start();
+        $this->view->setRenderLevel(\Phalcon\Mvc\View::LEVEL_ACTION_VIEW);
         $this->view->setVar('items' ,$blocks);
+        $this->view->render('tgb','default');
+        $this->view->finish();
+
+        $html = $this->view->getContent();
+
+        return $_GET['callback'].'('.json_encode(['response'=>'ok', 'count'=>count($blocks),'html'=>$html]).')';
     }
 
+
+    public function jsAction() {
+
+
+        return $_GET['callback'].'('.json_encode(['ok'=>'ok']).')';
+    }
+
+    /**
+     * Весь трекинг в одном экшене
+     */
     public function trackAction() {
 
         $params  = $this->request->get();
