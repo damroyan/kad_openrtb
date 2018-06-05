@@ -96,13 +96,6 @@ class TgbController extends \Phalcon\Mvc\Controller
         exit;
     }
 
-
-    public function jsAction() {
-
-
-        return $_GET['callback'].'('.json_encode(['ok'=>'ok']).')';
-    }
-
     /**
      * Весь трекинг в одном экшене
      */
@@ -213,6 +206,7 @@ class TgbController extends \Phalcon\Mvc\Controller
         }
 
         return;
+        exit;
     }
 
 
