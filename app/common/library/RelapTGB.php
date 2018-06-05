@@ -142,7 +142,7 @@ class RelapTGB {
         $params = [
                 'session'   => $this->sessionUuid,
                 'client'    => $this->cookie,
-               // 'url'       => $url,
+                'url'       => $url,
                 'action'    => $action,
                 'partner'   => $this->partner_id,
             ];
