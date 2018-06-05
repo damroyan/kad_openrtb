@@ -57,8 +57,6 @@ class TgbController extends \Phalcon\Mvc\Controller
      */
     public function getAction()
     {
-        echo 'tgb/get';
-        exit;
         if ($this->partner_id == "" || !isset($this->partners[$this->partner_id]) || !isset($_GET['callback'])) {
             return json_encode(['response'=>'error']);
         }
@@ -91,6 +89,9 @@ class TgbController extends \Phalcon\Mvc\Controller
         $this->view->setVar('items' ,$blocks);
         $this->view->render('tgb','default');
         $this->view->finish();
+
+        echo 'end of tgb/get';
+        exit;
 
         $html = $this->view->getContent();
 
