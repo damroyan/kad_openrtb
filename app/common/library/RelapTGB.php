@@ -165,8 +165,8 @@ class RelapTGB {
 
         $url        = $this->referrer;
 
-       // $ip = '92.100.230.106';
-       // $url = "https://rueconomics.ru/307776-idem-na-sblizhenie-kak-siriiskii-vopros-pomozhet-otnosheniyam-rossii-i-turcii";
+        $ip = '92.100.230.106';
+        $url = "https://rueconomics.ru/307776-idem-na-sblizhenie-kak-siriiskii-vopros-pomozhet-otnosheniyam-rossii-i-turcii";
 
         $pieces     = parse_url($url);
         if($pieces['host']) {

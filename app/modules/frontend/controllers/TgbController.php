@@ -100,7 +100,6 @@ class TgbController extends \Phalcon\Mvc\Controller
      * Весь трекинг в одном экшене
      */
     public function trackAction() {
-
         $params  = $this->request->get();
 
         if (!isset($params['partner'])) {
@@ -170,8 +169,8 @@ class TgbController extends \Phalcon\Mvc\Controller
             return;
         }
 
-        $logger->complete();
 
+        $logger->complete();
         switch ($params['action']) {
             case 'request': // + php
             case 'error':   // + php
@@ -181,31 +180,30 @@ class TgbController extends \Phalcon\Mvc\Controller
             case 'close':   // js
                 $this->response->setStatusCode(200);
                 $this->response->setContentType('image/gif');
-                $this->response->send();
+               // $this->response->send();
                 break;
 
             case 'imp':     // + impression
             case 'click':   // + click
                 if ($params['url']) {
                     $this->response->setStatusCode(302);
-                    $this->response->setHeader('X-State', 'true');
+
                     $this->response->setHeader('Location', $params['url']);
-                    $this->response->send();
+                    //$this->response->setHeader('X-State', 'true');
+                   // $this->response->send();
                 } else {
                     $this->response->setStatusCode(200);
                     $this->response->setContentType('image/gif');
-                    $this->response->send();
+                   // $this->response->send();
                 }
                 break;
 
             default:
                 $this->response->setStatusCode('405');
-                $this->response->send();
-                return;
+                //$this->response->send();
                 break;
         }
 
-        return;
         exit;
     }
 
