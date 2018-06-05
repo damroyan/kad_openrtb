@@ -70,7 +70,8 @@ class RelapTGB {
             echo '<pre> Запрашиваем на урл: '.$this->url;
             print_r($this->params);
         }
-
+//    echo json_encode($this->params);
+//        exit;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -161,9 +162,12 @@ class RelapTGB {
         if ($ip === null) {
             $ip = self::getIp();
         }
-        $ip = '92.100.230.106';
 
         $url        = $this->referrer;
+
+       // $ip = '92.100.230.106';
+       // $url = "https://rueconomics.ru/307776-idem-na-sblizhenie-kak-siriiskii-vopros-pomozhet-otnosheniyam-rossii-i-turcii";
+
         $pieces     = parse_url($url);
         if($pieces['host']) {
             $domain     = $pieces['host'];
@@ -203,7 +207,7 @@ class RelapTGB {
                 "id"            => $i,
                 "tagid"         => "rtb",
                 "bidfloorcur"   => "RUB",
-                "bidfloor"      => $this->bidfloor,
+                "bidfloor"      => floatval($this->bidfloor),
                 "secure"        => 1,
                 "native"        => [
                     "ver"           => "1.0.0.1",
