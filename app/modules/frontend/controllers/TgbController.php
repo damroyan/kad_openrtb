@@ -90,12 +90,10 @@ class TgbController extends \Phalcon\Mvc\Controller
         $this->view->render('tgb','default');
         $this->view->finish();
 
-        echo 'end of tgb/get';
-        exit;
-
         $html = $this->view->getContent();
 
         return $_GET['callback'].'('.json_encode(['response'=>'ok', 'count'=>count($blocks),'html'=>$html]).')';
+        exit;
     }
 
 
