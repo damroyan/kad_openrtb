@@ -8,6 +8,7 @@ class TgbController extends \Phalcon\Mvc\Controller
 
     public $partners = [
         '50bd8c21bfafa6e4e962f6a948b1ef92' => 'fan',
+        'f08dfd477b90159ac5cef98cebe1ee90' => 'fan_3399_test',
     ];
 
     public $log_dir = __DIR__.'/../../../../logs/';
@@ -221,12 +222,14 @@ class TgbController extends \Phalcon\Mvc\Controller
 
         $message = [
             'action'            => $params['action'],
+            'banner_id'         => $params['id'],
             'partner'           => mb_strtolower($params['partner']),
             'session'           => mb_strtolower($params['session']),
             'client'            => mb_strtolower($params['client']),
             'ip'                => \Tizer\RelapTGB::getIp(),
             'ua'                => mb_substr(mb_strtolower($_SERVER['HTTP_USER_AGENT']), 0, 512),
             'url'               => isset($params['url']) ? $params['url'] : null,
+
         ];
 
         try {
