@@ -40,6 +40,24 @@ class Logger {
     private $_fileHandle    = null;
     private $_defaultPermission = 0777;
 
+    /**
+     * $options => [
+     * 'filename'           => 'полное имя файла',
+     * 'prefix'             => 'префик для файла, по умолчанию log_',
+     * 'extension'          => 'расширение, по умолчанию txt',
+     * 'dateFormat'        => 'Y-m-d H:i:s.u',
+     * 'filename'          => false,
+     * 'logFormat'         => false,
+     * 'messageDelimiter'  => "\t",
+     * 'fileLock'          => true,
+     * 'fileLockTry'       => 100,
+     * ]
+     *
+     * Logger constructor.
+     * @param $logDirectory
+     * @param string $logLevelThreshold
+     * @param array $options
+     */
     public function __construct($logDirectory, $logLevelThreshold = self::DEBUG, array $options = []) {
         $this->logLevelThreshold = $logLevelThreshold;
         $this->options = array_merge($this->options, $options);

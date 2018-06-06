@@ -82,10 +82,12 @@ class TgbController extends \Phalcon\Mvc\Controller
             $tgb->setReferrer($url);
         }
 
+        $bid_floor = 0.0001;
+
         $tgb->setSession($this->sessionUUID);
         $tgb->setCookie($this->clientUuid);
         $tgb->setPartnerID($this->partner_id);
-        $tgb->setBidfloor(0.0001);
+        $tgb->setBidfloor($bid_floor);
 
         $count = 2;
         if ($this->request->has('count')) {
@@ -97,7 +99,31 @@ class TgbController extends \Phalcon\Mvc\Controller
 
         $blocks = $tgb->get(4);
 
+        $logger = new \Tizer\Logger($this->log_dir.strtolower($this->partner_id)
+            , \Tizer\Logger::DEBUG
+            , ['prefix'=>'init_']);
+
+        $message = [
+            'action'            => 'init',
+            'partner'           => mb_strtolower($this->partner_id),
+            'session'           => mb_strtolower($this->sessionUUID),
+            'client'            => mb_strtolower($this->clientUuid),
+            'referer'           => $url,
+            'ip'                => \Tizer\RelapTGB::getIp(),
+            'source'            => $openrtb_url,
+            'bid_floor'         => $bid_floor,
+            'count_needed'      => $count,
+            'count_received'    => count($blocks),
+        ];
+        $logger->log(
+            json_encode($message, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT)
+        );
+        $logger->complete();
+
         if (count($blocks) == 0) {
+
+
+
             return $_GET['callback'].'('.json_encode(['response'=>'ok', 'count'=>0,'html'=>'']).')';
             exit;
         }
@@ -127,13 +153,15 @@ class TgbController extends \Phalcon\Mvc\Controller
                 ];
             }*/
 
+            $logger->complete();
+
             return $_GET['callback'].'('.json_encode(['response'=>'ok', 'count'=>0,'html'=>'']).')';
             exit;
         }
 
+        $logger = new \Tizer\Logger($this->log_dir.strtolower($this->partner_id));
 
         foreach ($blocks as $b) {
-            $logger = new \Tizer\Logger($this->log_dir.strtolower($this->partner_id));
 
             $message = [
                 'action'            => 'request',
