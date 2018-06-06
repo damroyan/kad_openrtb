@@ -1,0 +1,52 @@
+/* */
+.da_container_3 {
+    position: fixed;
+    z-index: 9999;
+    width: 220px;
+    height: 320px;
+    bottom: 5%;
+    padding: 30px 15px 10px 25px;
+    left: -15px;
+    box-shadow: rgb(0, 0, 0) 0px 0px 1.449em -0.252em;
+    height: 322px !important;
+    border-radius: 6px !important;
+    top:50% !important;
+    box-shadow: rgb(0, 0, 0) 0px 0px 1.449em -0.252em;
+    left: -6px !important;
+    padding: 30px 15px 10px 25px !important;
+}
+
+.adf_sg_vstv .asg2_row img {
+    width: 60px;
+}
+
+.adf_sg_vstv .asg2_row a[title]:hover {
+    text-decoration: none;
+    color: #7f7f7f;
+}
+.da_container_3 img{
+    width:60px !important;
+    height:60px !important;
+}
+
+/********* relap in text (desktop) **************/
+#single_page_content_div .js-relap__item-thumbnail{
+    height: 110px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+#single_page_content_div .js-relap__item{
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+}
+
+#single_page_content_div .relap-default-wrapper{
+    margin-top: -13px;
+    margin-bottom: -22px;
+}
+#single_page_content_div .js-relap__item-thumbnail__img{
+
+}

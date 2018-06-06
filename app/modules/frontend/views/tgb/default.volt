@@ -1,12 +1,21 @@
 
-<ul class="list-container">
+<div class="list-container">
 {% for item in items %}
-    <li class="list-container-item">
-        <a class="imgFrame" target="_blank">
-            <img src="{{ item['img']['url'] }}" width="250" class="image">
-        </a>
-        <a href="{{ item['url'] }}" class="title" target="_blank">{{ item['text'] }}</a>
-        <img src="{{ item['tracking_pixel'] }}" />
-    </li>
+    <a href="{{ item['url'] }}" target="_blank" class="list-container-item" >
+        <div class="innerWrap">
+            <div class="imgFrame">
+                <div target="_blank" style="background: url({{ item['img']['url'] }}) 50% 50% no-repeat; width: 250px; height: 250px;">
+                    &nbsp;
+                </div>
+            </div>
+
+            <div class="title">
+                {{ item['text'] }}
+                <img src="{{ item['tracking_pixel'] }}" width="1" height="1" />
+                <img src="{{ item['nurl'] }}" width="1" height="1" />
+            </div>
+            <div class="clear"></div>
+        </div>
+    </a>
 {% endfor %}
-</ul>
+</div>

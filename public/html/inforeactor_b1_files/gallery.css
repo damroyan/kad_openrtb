@@ -1,0 +1,352 @@
+* { margin: 0; padding: 0; }
+
+@font-face {
+    font-family: HelveticaNeueCyrBold;
+    src: url(../fonts/HelveticaNeueCyrBold.otf);
+}
+@font-face {
+    font-family: HelveticaNeueCyrLight;
+    src: url(../fonts/HelveticaNeueCyrLight.otf);
+}
+@font-face {
+    font-family: HelveticaNeueCyrRoman;
+    src: url(../fonts/HelveticaNeueCyrRoman.otf);
+}
+body{
+
+}
+
+.graphic{
+	width: 1260px;
+	padding: 10px;
+	margin: 50px auto; 
+	font-size: 0;
+}
+.category_name{
+	height: 22px;
+	font-size: 18px;
+	font-family: HelveticaNeueCyrRoman;
+	color: #41464b; 
+}
+.tabs_mail{
+	height: 70px;
+    position: relative;
+}
+.button_tab{
+	width: auto;
+	height: 33px;
+	border: 1px solid #41464b;
+	font-size: 0;
+	border-radius: 3px;
+	position: absolute;
+	top: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+.button_tab .tab{
+	display: inline-block;
+	vertical-align: top;
+	width: auto;
+	padding: 0 15px;
+	height: 33px;
+	color: #41464b;
+	font-size: 14px;
+	font-family: HelveticaNeueCyrRoman;
+	text-align: center;
+	line-height: 33px;
+	transition: 0.3s;
+}
+
+
+.tab.tab-analytics{
+	background-image:  url('/assets/images/svg/superpen.svg')!important;
+	background-repeat: no-repeat!important;
+	background-position: 92px center!important;
+	padding-right: 36px;
+}
+
+.button_tab .tab.active.tab-analytics{
+	background-image: url('/assets/images/svg/superpen-wh.svg')!important;
+}
+
+.tab.tab-experts{
+	background-image:  url('/assets/images/svg/supermen.svg')!important;
+	background-repeat: no-repeat!important;
+	background-position: 10px center!important;
+	padding-left: 30px;
+}
+
+.button_tab .tab.active.tab-experts{
+	background-image: url('/assets/images/svg/supermen-wh.svg')!important;
+}
+
+.button_tab .tab:hover{
+	cursor: pointer;
+}
+.button_tab .tab.active{
+	background: #41464b;
+	color: #fff;
+}
+.e_mail{
+	position: absolute;
+	top: 20px;
+	right: 0;
+}
+.e_mail span{
+	position: absolute;
+    top: 10px;
+    right: 203px;
+    display: block;
+    color: #41464b;
+    width: 194px;
+    height: 15px;
+    font-family: HelveticaNeueCyrRoman;
+    font-size: 14px;
+}
+.e_mail_put{
+    height: 23px;
+    width: 150px;
+    position: absolute;
+    top: 0;
+    right: 30px;
+    outline: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: none;
+    border: 1px solid #e0e1e0;
+}
+.send{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 35px;
+    width: 34px;
+    background: #8d9093;
+    background-image: url(../images/post.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    border: none;
+    border-radius: 0 3px 3px 0;
+    outline: none;
+    transition: 0.3s;
+}
+.send:hover{
+	cursor: pointer;
+	background: #41464b;
+	background-image: url(../images/post.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.graphic_block{
+	display: none;
+}
+
+.graphic_block.active{
+	display: block;
+}
+
+.infografics{
+	display: none;
+}
+.infografics.active{
+	display: block;
+}
+
+.block_img{
+	display: inline-block;
+	vertical-align: top;
+	width: 414px;
+	margin-right: 9px;
+}
+.third.block_img{
+	margin-right: 0;
+}
+
+.poster_img{
+	display: block;
+	width: 412px;
+	border-radius: 3px;
+	overflow: hidden;
+	position: relative;
+	margin-bottom: 9px;
+}
+.poster_img:hover{
+	cursor: pointer;
+}
+.block_info{
+	position: absolute;
+	left: 0;
+	bottom: -82px;
+	width: 414px;
+	height: 180px;
+	transition: 0.3s;
+	background: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+}
+.poster_img:hover .block_info{
+	bottom: 0;
+	cursor: pointer;
+}
+.block_red_time{
+	position: absolute;
+	bottom: 165px;
+	left: 12px;
+	color: #d64646;
+    font-family: HelveticaNeueCyrLight;
+	font-size: 14px;
+}
+.block_date{
+	position: absolute;
+	bottom: 165px;
+	left: 50px;
+	color: #fff;
+    font-family: HelveticaNeueCyrLight;
+	font-size: 14px;
+}
+.viewed{
+	width: 60px;
+	height: 15px;
+	background-image: url(../images/viewed.png);
+	background-repeat: no-repeat;
+	background-position: left center; 
+	position: absolute;
+	text-align: right;
+	bottom: 165px;
+	right: 12px;
+	color: #fff;
+	font-family: HelveticaNeueCyrLight;
+	font-size: 14px;
+}
+.poster_img h3{
+	position: absolute;
+	bottom: 94px;
+	left: 0px;
+	color: #fff;
+	padding: 0 12px;
+	font-family: HelveticaNeueCyrBold;
+	font-size: 18px;
+	text-transform: uppercase;
+	line-height: 20px;
+	height: 60px;
+	overflow: hidden;
+}
+.block_text{
+	position: absolute;
+	bottom: 16px;
+	left: 12px;
+	color: #fff;
+	font-family: HelveticaNeueCyrRoman;
+	font-size: 14px;
+	width: 384px;
+	padding: 0 0 0 10px;
+	border-left: 1px solid #74e19a;
+	line-height: 16px;
+	height: 64px;
+    overflow: hidden;
+}
+
+.blwidth{
+	width:400px !important;
+}
+
+
+/*
+///////////////////////////////////////////////////
+*/
+
+.graph_thumbnail {
+	display: block;
+	width: 400px;
+	border-radius: 3px;
+	overflow: hidden;
+	position: relative;
+	margin-bottom: 9px;
+}
+
+.block_info2{
+	position: absolute;
+	left: 0;
+	bottom: -82px;
+	width: 400px;
+	min-height: 180px;
+	transition: 0.3s;
+	background: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+}
+
+.poster_img2{
+	display: block;
+	width: 400px;
+	border-radius: 3px;
+	overflow: hidden;
+	position: relative;
+	margin-bottom: 9px;
+}
+
+.poster_img2:hover{
+	cursor: pointer;
+}
+
+.poster_img2:hover .block_info2{
+	bottom: 0;
+	cursor: pointer;
+}
+
+.graphh3{
+	position: absolute;
+	bottom: 64px;
+	left: 0px;
+	color: #fff;
+	padding: 0 12px;
+	font-family: HelveticaNeueCyrBold;
+	font-size: 18px;
+	text-transform: uppercase;
+	line-height: 20px;
+	height: 60px;
+	overflow: hidden;
+	color:#fff !important;
+}
+
+.block_red_time2{
+	position: absolute;
+	bottom: 135px;
+	left: 12px;
+	color: #d64646;
+	font-family: HelveticaNeueCyrLight;
+	font-size: 14px;
+}
+.block_date2{
+	position: absolute;
+	bottom: 135px;
+	left: 50px;
+	color: #fff;
+	font-family: HelveticaNeueCyrLight;
+	font-size: 14px;
+}
+.viewed2{
+	width: 100px;
+	height: 15px;
+	position: absolute;
+	text-align: right;
+	bottom: 135px;
+	right: 12px;
+	color: #fff;
+	font-family: HelveticaNeueCyrLight;
+	font-size: 14px;
+}
+.viewed2 img {
+	margin-right: 3px;
+}
+
+.block_text2{
+	position: absolute;
+	bottom: 16px;
+	left: 12px;
+	color: #fff;
+	font-family: HelveticaNeueCyrRoman;
+	font-size: 14px;
+	width: 370px;
+	padding: 0 0 0 10px;
+	border-left: 1px solid #74e19a;
+	line-height: 16px;
+	height: 64px;
+	overflow: hidden;
+}

@@ -1,0 +1,98 @@
+.slick_gallery {
+    margin: 10px auto;
+}
+
+.slick_gallery_nav .slick_gallery_item {
+    margin: 10px 5px 10px 5px;
+    width: 160px;
+    height: 80px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    opacity: 0.7;
+    cursor: pointer;
+    outline: none;
+
+}
+
+.slick_gallery_big .slick_gallery_item {
+    width: 100%;
+    background-color: rgba(204, 204, 204, 0.8);
+}
+
+
+.slick_gallery_nav .slick-current, .slick_gallery_nav .slick_gallery_item:hover {
+    opacity: 1;
+}
+
+.slick_gallery_big .slick_gallery_item {
+    cursor: pointer;
+}
+
+.slick_gallery_big:hover .slick-arrow, .slick_gallery_nav:hover .slick-arrow {
+    opacity: 0.7;
+}
+
+.slick_gallery_nav .slick-arrow{
+    z-index: 1;
+    font-size: 0;
+    color: transparent;
+    visibility: visible;
+    display: inline-block!important;
+    outline: none;
+    border: 0;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(63, 62, 65, 1);
+    position: absolute;
+    top:35px;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.slick_gallery_big .slick-arrow {
+    z-index: 1;
+    font-size: 0;
+    color: transparent;
+    visibility: visible;
+    display: inline-block!important;
+    outline: none;
+    border: 0;
+    width: 50px;
+    height: 100%;
+    top: 0;
+    position: absolute;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+}
+
+.slick-arrow:hover {
+    opacity: 1!important;
+}
+
+.slick-arrow.slick-prev {
+    left: 0;
+    background: url(/assets/images/arrow-left.png) no-repeat center center, rgba(63, 62, 65, 1);
+}
+
+.slick-arrow.slick-next {
+    right: 0;
+    background: url(/assets/images/arrow-right.png) no-repeat center center, rgba(63, 62, 65, 1);;
+}
+
+.slick_gallery_info {
+    padding: 10px 0;
+}
+
+.slick_gallery_counter {
+    float: right;
+}
+
+.slick_gallery_slide_alt {
+    color: rgb(136, 136, 136);
+    margin-left: 15px;
+}

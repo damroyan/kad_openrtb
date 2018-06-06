@@ -112,11 +112,12 @@ class RelapTGB {
                 $data = json_decode($b['adm'], true);
 
                 $return[] = [
-                    'tracking_pixel'    => $this->trackUrl($b['nurl'],'imp'),
-                    'url'               => $this->trackUrl($data['native']['link']['url'], 'click'),
+                    'nurl'              => $b['nurl'],
+                    'tracking_pixel'    => $this->trackUrl($b['nurl'],'imp', ['id' => $b['id']]),
+                    'url'               => $this->trackUrl($data['native']['link']['url'], 'click', ['id' => $b['id']]),
                     'price_cpc'         => floatval($b['price_cpc']),
                     'ecpm'              => floatval($b['price']),
-
+                    'id'                => $b['id'],
                 ];
 
                 $index = count($return)-1;
@@ -137,20 +138,22 @@ class RelapTGB {
         return $return;
     }
 
-    public function trackUrl($url, $action = "request") {
+    public function trackUrl($url = "", $action = "request", $additional_params = []) {
 
         $params = [
-                'session'   => $this->sessionUuid,
-                'client'    => $this->cookie,
-                'url'       => $url,
-                'action'    => $action,
-                'partner'   => $this->partner_id,
-            ];
+            'session'   => $this->sessionUuid,
+            'client'    => $this->cookie,
+            'url'       => $url,
+            'action'    => $action,
+            'partner'   => $this->partner_id,
+        ];
+        $params = array_merge($additional_params, $params);
 
         $params['crc']= md5( $this->config->crc_secret_key . ":{$params['url']}:{$params['session']}:{$params['client']}");
 
         return "//" . $this->config->domains->tracking . "/tgb/track?" . http_build_query($params);
     }
+
 
     /**
      * @param int $count количество запрашиваемых блоков

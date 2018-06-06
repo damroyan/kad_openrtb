@@ -1,0 +1,89 @@
+
+#msp .cover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999998;
+}
+
+#msp .popup_block {
+    width: 600px;
+    height: 400px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -200px;
+    margin-left: -300px;
+    border-radius: 8px;
+    background: #fff url(/assets/images/megasmi/megasmi_popup_bg.png) no-repeat;
+    background-size: cover;
+    z-index: 99999999;
+}
+
+#msp .logo_pu img {
+    width: 168px;
+    height: 52px;
+    position: absolute;
+    top: 30px;
+    left: 65px;
+}
+
+#msp .text_pu {
+    width: 430px;
+    font: 400 14px Roboto;
+    color: #000;
+    position: absolute;
+    top: 243px;
+    left: 93px;
+    text-align: center;
+}
+
+#msp .inst_show {
+    width: 300px;
+    font: 400 18px Roboto;
+    color: #fff;
+    position: absolute;
+    top: 318px;
+    left: 153px;
+    text-align: center;
+}
+
+#msp .btn {
+    width: 299px;
+    height: 54px;
+    text-align: center;
+    font: 400 18px/54px Roboto;
+    color: #fff;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(235, 58, 56, 0.8);
+    border-radius: 0 0 0 8px;
+    transition: 0.3s;
+    padding: 0;
+}
+
+#msp .btn:hover {
+    cursor: pointer;
+    background: rgba(235, 58, 56, 1);
+}
+
+#msp .btn.right {
+    left: initial;
+    right: 0;
+    border-radius: 0 0 8px 0;
+}
+
+#msp .close_pu {
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    background: url(/assets/images/megasmi/close_pu.svg) no-repeat;
+}

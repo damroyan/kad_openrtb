@@ -1,0 +1,182 @@
+var INFOX1306 = {
+	loaded: false,
+	tID: null,
+	toElem: null,
+	checkScroll: true,
+	ie10Arr:  null/*IE10ARR*/,   // don't change no one symbol !!!
+	
+	getXmlHttp : function() {
+		var xmlhttp;
+		try {
+			xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try {
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (E) {
+				xmlhttp = false;
+			}
+		}
+		if (!xmlhttp) {
+			var XHR = window.XDomainRequest || window.XMLHttpRequest;
+			xmlhttp = new XHR()
+		}
+		if ("withCredentials" in xmlhttp) {
+			xmlhttp.withCredentials = true;
+		}
+		
+		return xmlhttp;
+	},
+	
+	shuffle : function(array) {
+		var currentIndex = array.length, temporaryValue, randomIndex;
+
+		// While there remain elements to shuffle...
+		while (0 !== currentIndex) {
+
+			// Pick a remaining element...
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex -= 1;
+
+			// And swap it with the current element.
+			temporaryValue = array[currentIndex];
+			array[currentIndex] = array[randomIndex];
+			array[randomIndex] = temporaryValue;
+		}
+
+		return array;
+	},
+	
+	loadNow: function() {
+		if (this.loaded)
+			return false;
+		
+		this.loaded = true;
+    	window.removeEventListener("scroll", this.loadOnScroll);
+
+    	if (this.ie10Arr != null) {
+    		this.writeItems(this.ie10Arr);
+    	} else {
+			var self = this;
+			var req = self.getXmlHttp();
+			req.open('GET', 'https://rb.infox.sg/json?id=1306', true);
+			req.onreadystatechange = function() {
+				if (req.readyState == 4) {
+					var myArr = JSON.parse(req.responseText);
+					self.writeItems(myArr);
+				}
+			};
+			req.send();
+    	}
+		return true;
+	},
+
+	
+	writeItems: function(arr) {
+		if (arr.length > 0) {
+			if (arr.length == 1 && arr[0].code != null) {
+				this.toElem.innerHTML = arr[0].code;
+			} else {
+				var html = "<style type='text/css'>.adf_sg_vstg2 {position: relative;margin: 15px -15px 0px -15px;width: auto;}.adf_sg_vstg2 a img {border: none;}.adf_sg_vstg2 .asg2_row div {float: left;position: relative;width: 25%;}.adf_sg_vstg2 .asg2_row {overflow: hidden;margin-bottom: 15px;}.adf_sg_vstg2 .asg2_row div {line-height: 14px;}.adf_sg_vstg2 .asg2_row div.asg2_il {margin-right: 0px;}.adf_sg_vstg2 .asg2_row > div a:first-child {display: block;overflow: hidden;position: relative;padding: 0 15px;height: 180px;}.adf_sg_vstg2 .asg2_row img {width: 100%;position: relative;border-radius: 2px;top: -11px;}.adf_sg_vstg2 .asg2_row a {text-decoration: none;}.adf_sg_vstg2 .asg2_row a[title] {color: #000;position: relative;text-decoration: none;display: block;padding: 5px 15px 15px 15px;font: 15px/21px HelveticaNeueCyr-Roman;}.adf_sg_vstg2 .asg2_row a[title]:hover {text-decoration: none;color: #7f7f7f;}#sdf_4{clear: left;}</style>    <div class='adf_sg_vstg2'>    <div class='asg2_row asg2_first'>    ";
+				this.shuffle(arr);
+				for (var i = 0; i < arr.length; i++) {
+					var item = arr[i];
+					var str = "<div id='sdf_{n}'>    <a href='{url}' target='_blank'>    <img src='{img}'>    </a>    <a href='{url}' title='' target='_blank'>    {title}    </a>    </div>";
+					str = str.replace(/\{url\}/g, item.url)
+							.replace('{img}', item.img)
+							.replace('{width}', item.width)
+							.replace('{height}', item.height)
+							.replace('{title}', item.title)
+							.replace('{n}', i);
+					str = this.fixLinkTarget(item.linkTarget, str);
+					html += str;
+				}
+				html += "    </div>    </div>";
+				html += "";
+				this.toElem.innerHTML = html;
+			}
+			
+			this.trackOnScroll();
+			window.addEventListener("scroll", this.trackOnScroll); 
+		}
+	},
+	
+	fixLinkTarget: function(linkTarget, str) {
+		if (linkTarget != 'byDefault') {
+			str = str.replace(/target=["'][^'"]*["']/g, '');
+
+			if (linkTarget == 'blank')
+				str = str.replace(/href=/g, ' target="_blank" href=');
+		}
+		return str;
+	},
+	
+	track: function() {
+		var self = INFOX1306;
+		var req = self.getXmlHttp();
+		req.open('GET', 'https://rb.infox.sg/track', true);
+		req.send(null);
+    	window.removeEventListener("scroll", self.trackOnScroll); 
+	},
+	
+    loadOnScroll : function() {
+    	var self = INFOX1306;
+    	if (self.loaded)
+    		return;
+    	
+    	var pos = self.positions();
+		if (pos.isLoadPosition()) 
+			self.loadNow();
+	},
+	
+	trackOnScroll: function() {
+		var self = INFOX1306;
+		var pos = self.positions();
+		if (pos.isTrackPosition()) {
+			if (! self.tId)
+				self.tId = setTimeout(self.track, 1000)
+		} 
+		else if (self.tId) {
+			clearTimeout(self.tId);
+			self.tId = null;
+		}
+		return;
+	},
+	
+	
+	positions: function() {
+    	var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+		var scrollHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+	    var box = this.toElem.getBoundingClientRect();
+	    var clientTop = this.toElem.clientTop || 0;
+	    var top  = box.top +  scrollTop - clientTop;
+	    var h = this.toElem.offsetHeight;
+	    
+	    return {
+	    	isLoadPosition: function() { return scrollTop + scrollHeight > top; },
+	    	isTrackPosition: function() {return scrollTop + scrollHeight > top + h / 2 && top + h > scrollTop; }
+	    }
+	},
+	
+	renderTo : function(divId) {
+		this.toElem = document.getElementById(divId);
+		if (! this.toElem || this.loaded) 
+			return;
+		
+		if (this.checkScroll) {
+			this.loadOnScroll();
+			window.addEventListener("scroll", this.loadOnScroll);
+		}
+		else
+	    	this.loadNow();
+	},
+	
+	init : function() {
+		var blocks = window['infoxContextAsyncCallbacks1306'];
+		if (blocks) {
+			for (i in blocks) {
+				blocks[i]();
+			}
+		}
+	}
+};
+INFOX1306.init();

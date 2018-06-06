@@ -8,14 +8,14 @@ function _jsload(src) {
 }
 ;
 (function() {
-    document.getElementById("kad_tgb_2489").innerHTML = "<div id=\"container_2489\"> test </div><style>#container_2489 { box-sizing: border-box; margin: 20px 0; } #container_2489 #header_2489 { color: #ffdd00; font-family: 'Open Sans', Helvetica, Arial, Verdana, sans-serif; font-size: 16px; font-weight: 600; line-height: 30px; text-transform: uppercase; background: #000; height: 30px; padding: 0 10px; margin-bottom: 10px; display: inline-block; } #container_2489 .list-container { font-size: 0; margin: 0 -5px; } #container_2489 .list-container-item { display: inline-block; vertical-align: top; width: 33.33333%; margin: 0 0px 10px; height: 88px; overflow: hidden; padding: 0 5px; -webkit-box-sizing: border-box; box-sizing: border-box; } #container_2489 .list-container-item .innerWrap{ background: #ededed; } #container_2489 .list-container-item .imgFrame { display: block; position: relative; width: 88px; height: 88px; float: left; } #container_2489 .list-container-item .imgFrame:after { content: \"\"; position: absolute; width: 0; height: 0; line-height: 0; font-size: 0; overflow: hidden; border: solid 10px; cursor: pointer; border-color: transparent #ededed transparent transparent !important; right: 0 !important; top: 10px !important; bottom: auto !important; left: auto !important; } #container_2489 .list-container-item .image { display: block; border: none; width: 100%; height: 100%; } #container_2489 .list-container-item .title { display: block; margin-left: 98px; margin-right: 6px; text-align: left; height: 88px; color: rgb(38, 38, 38) !important; font-family: 'Open Sans', Helvetica, Arial, Verdana, sans-serif; font-size: 14px; font-weight: 600; line-height: 17px; text-decoration: none; } #container_2489 .list-container-item .title:hover { text-decoration: underline; } #container_2489 .list-container-item .clear { clear: left; } @media (min-width: 900px) and (max-width: 1024px) { #container_2489 .list-container-item { width: 100%; } } @media (max-width: 450px) { #container_2489 .list-container-item { width: 100%; } }</style>";
+    document.getElementById("kad_tgb_3399").innerHTML = "<div id=\"container_3399\"> test </div><style>#container_3399 { box-sizing: border-box; margin: 20px 0; } #container_3399 #header_3399 { color: #ffdd00; font-family: 'Open Sans', Helvetica, Arial, Verdana, sans-serif; font-size: 16px; font-weight: 600; line-height: 30px; text-transform: uppercase; background: #000; height: 30px; padding: 0 10px; margin-bottom: 10px; display: inline-block; } #container_3399 .list-container { font-size: 0; margin: 0 -5px; } #container_3399 .list-container-item { display: inline-block; vertical-align: top; width: 33.33333%; margin: 0 0px 10px; height: 88px; overflow: hidden; padding: 0 5px; -webkit-box-sizing: border-box; box-sizing: border-box; } #container_3399 .list-container-item .innerWrap{ background: #ededed; } #container_3399 .list-container-item .imgFrame { display: block; position: relative; width: 88px; height: 88px; float: left; } #container_3399 .list-container-item .imgFrame:after { content: \"\"; position: absolute; width: 0; height: 0; line-height: 0; font-size: 0; overflow: hidden; border: solid 10px; cursor: pointer; border-color: transparent #ededed transparent transparent !important; right: 0 !important; top: 10px !important; bottom: auto !important; left: auto !important; } #container_3399 .list-container-item .image { display: block; border: none; width: 100%; height: 100%; } #container_3399 .list-container-item .title { display: block; margin-left: 98px; margin-right: 6px; text-align: left; height: 88px; color: rgb(38, 38, 38) !important; font-family: 'Open Sans', Helvetica, Arial, Verdana, sans-serif; font-size: 14px; font-weight: 600; line-height: 17px; text-decoration: none; } #container_3399 .list-container-item .title:hover { text-decoration: underline; } #container_3399 .list-container-item .clear { clear: left; } @media (min-width: 900px) and (max-width: 1024px) { #container_3399 .list-container-item { width: 100%; } } @media (max-width: 450px) { #container_3399 .list-container-item { width: 100%; } }</style>";
     var cb = function() {
         /** * Размер страницы (количество) загружаемых элементов * * @type {number} */
         var page_size = 3;
         /** * Максимальное количество загружаемых страниц элементов * * @type {number} */
         var max_page_count = 1;
         /** * Родительский элемент контейнера * * @type {HTMLElement} */
-        var parent_element = JsAPI.Dom.getElement("container_2489");
+        var parent_element = JsAPI.Dom.getElement("container_3399");
         /** * Настройки блока * * @type {*} */
         var properties = undefined;
         /** * Callback-функция рендера содержимого элемента * * @type {function(HTMLElement, *, number)} */
@@ -34,7 +34,7 @@ function _jsload(src) {
             }, model['title']), JsAPI.Dom.createDom('div', 'clear')]));
         };
         /** * Идентификатор блока * * @type {number} */
-        var block_id = 2489;
+        var block_id = 3399;
         /** * Маска требуемых параметров (полей) статей * * @type {number|undefined} */
         var opt_fields = JsAPI.Dao.NewsField.TITLE | JsAPI.Dao.NewsField.IMAGE;
         /** * Создание list-блока */
@@ -55,7 +55,7 @@ function _jsload(src) {
     window.jsapi.push(cb);
 }());
 window.ttsmi2_data = {
-    blockid: 2489,
+    blockid: 3399,
     siteid: 43622
 };
 if (!window.smi2TrackerSend) {
