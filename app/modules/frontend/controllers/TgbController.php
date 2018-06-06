@@ -97,7 +97,7 @@ class TgbController extends \Phalcon\Mvc\Controller
         $blocks = $tgb->get(4);
 
         if (count($blocks) == 0) {
-            return $_GET['callback'].'('.json_encode(['response'=>'ok', 'count'=>count($blocks),'html'=>'']).')';
+            return $_GET['callback'].'('.json_encode(['response'=>'ok', 'count'=>0,'html'=>'']).')';
             exit;
         }
 
@@ -126,7 +126,7 @@ class TgbController extends \Phalcon\Mvc\Controller
                 ];
             }*/
 
-            return $_GET['callback'].'('.json_encode(['response'=>'ok', 'count'=>count($blocks),'html'=>'']).')';
+            return $_GET['callback'].'('.json_encode(['response'=>'ok', 'count'=>0,'html'=>'']).')';
             exit;
         }
 
