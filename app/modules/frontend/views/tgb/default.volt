@@ -12,7 +12,11 @@
             <div class="title">
                 {{ item['text'] }}
                 <img src="{{ item['tracking_pixel'] }}" width="1" height="1" />
-                <img src="{{ item['nurl'] }}" width="1" height="1" />
+
+                {% if ( item['nurl'] ) %}
+                    <img src="{{ item['nurl'] }}" width="1" height="1" />
+                {% endif %}
+
             </div>
             <div class="clear"></div>
         </div>

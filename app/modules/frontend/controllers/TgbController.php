@@ -14,8 +14,9 @@ class TgbController extends \Phalcon\Mvc\Controller
 
     public $openrtb_sources = [
         'relap'   => [
-            'videocapcinema' => 'https://relap.io/openrtb/2_3/videocapcinema/bid_request',
-            'videocapvideo' => 'https://relap.io/openrtb/2_3/videocapvideo/bid_request',
+            'videocapcinema'    => 'https://relap.io/openrtb/2_3/videocapcinema/bid_request',
+            'videocapvideo'     => 'https://relap.io/openrtb/2_3/videocapvideo/bid_request',
+            'videocap'          => 'https://relap.io/openrtb/2_3/videocap/bid_request',
         ]
     ];
 
@@ -66,7 +67,7 @@ class TgbController extends \Phalcon\Mvc\Controller
      */
     public function getAction()
     {
-        $openrtb_url = $this->openrtb_sources['relap']['videocapcinema'];
+        $openrtb_url = $this->openrtb_sources['relap']['videocap'];
 
         if ($this->partner_id == "" || !isset($this->partners[$this->partner_id]) || !isset($_GET['callback'])) {
             return json_encode(['response'=>'error']);
@@ -96,13 +97,13 @@ class TgbController extends \Phalcon\Mvc\Controller
         $blocks = $tgb->get(4);
 
         if (count($blocks) == 0) {
-            return $_GET['callback'].'('.json_encode(['response'=>'ok', 'count'=>count($blocks),'html'=>$html]).')';
+            return $_GET['callback'].'('.json_encode(['response'=>'ok', 'count'=>count($blocks),'html'=>'']).')';
             exit;
         }
 
         // дозаполнить в конец до нужного количества
         if ( count($blocks) < $count) {
-            while( count($blocks) < $count) {
+           /* while( count($blocks) < $count) {
                 $b = [
                     'nurl'          =>  '//yandex.ru/logo.png',
                     'url'           =>  '//yandex.ru',
@@ -123,7 +124,10 @@ class TgbController extends \Phalcon\Mvc\Controller
                         'url'           => '//informnapalm.org/wp-content/uploads/2017/04/y.png'
                     ]
                 ];
-            }
+            }*/
+
+            return $_GET['callback'].'('.json_encode(['response'=>'ok', 'count'=>count($blocks),'html'=>'']).')';
+            exit;
         }
 
 
@@ -278,7 +282,5 @@ class TgbController extends \Phalcon\Mvc\Controller
 
         exit;
     }
-
-
 }
 

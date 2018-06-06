@@ -138,6 +138,14 @@ class RelapTGB {
         return $return;
     }
 
+    /**
+     * генерация трекинг ссылок
+     *
+     * @param string $url
+     * @param string $action
+     * @param array $additional_params
+     * @return string
+     */
     public function trackUrl($url = "", $action = "request", $additional_params = []) {
 
         $params = [
@@ -156,6 +164,8 @@ class RelapTGB {
 
 
     /**
+     * Получение параметров запроса к Relap
+     *
      * @param int $count количество запрашиваемых блоков
      * @param string $geo трехсимвольный ГЕО
      * @return array - массив параметров для отправки
@@ -168,8 +178,9 @@ class RelapTGB {
 
         $url        = $this->referrer;
 
-        $ip = '92.100.230.106';
-        $url = "https://rueconomics.ru/307776-idem-na-sblizhenie-kak-siriiskii-vopros-pomozhet-otnosheniyam-rossii-i-turcii";
+
+        //$ip = '92.100.230.106';
+        //$url = "https://rueconomics.ru/307776-idem-na-sblizhenie-kak-siriiskii-vopros-pomozhet-otnosheniyam-rossii-i-turcii";
 
         $pieces     = parse_url($url);
         if($pieces['host']) {
@@ -239,6 +250,9 @@ class RelapTGB {
         return $this->params = $params;
     }
 
+
+
+    // получение IP
     public static function getIp() {
 
         if ($_SERVER['HTTP_CLIENT_IP']) {
