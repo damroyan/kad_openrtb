@@ -1,4 +1,4 @@
-//ваш id партнера
+// politexpert - right-col x3
 var settings = {
     partner_id : '50bd8c21bfafa6e4e962f6a948b1ef92',
     count : 3,
