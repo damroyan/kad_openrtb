@@ -277,7 +277,6 @@ class TgbController extends \Phalcon\Mvc\Controller
             return;
         }
 
-
         $logger->complete();
         switch ($params['action']) {
             case 'request': // + php

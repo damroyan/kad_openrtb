@@ -55,7 +55,7 @@
 }
 #container_3579 .list-container-item .imgFrame {
     box-sizing: border-box;
-    width: 90px;
+    width: 102px;
     display: inline-block;
     vertical-align: inherit;
     float: left;
@@ -65,8 +65,8 @@
     background-size: cover;
     background-repeat: no-repeat;
     display: block;
-    width: 90px;
-    height: 90px;
+    width: 102px;
+    height: 102px;
 }
 #container_3579 .list-container-item .title {
     float:left;
