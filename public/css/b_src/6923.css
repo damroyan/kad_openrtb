@@ -66,6 +66,8 @@
     background-size: cover;
     background-repeat: no-repeat;
     display: block;
+    width: 250px !important;
+    height: 250px !important;
 }
 #container_6923 .list-container-item .title {
     width: 100%;

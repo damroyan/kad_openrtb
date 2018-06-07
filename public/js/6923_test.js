@@ -5,8 +5,9 @@ var settings = {
     url: window.location.href.toString().substr(0, 512)
 };
 
-
-var CallbackRegistry = {};
+if (typeof CallbackRegistry === "undefined") {
+    var CallbackRegistry = {};
+}
 function scriptRequest(url, params, onSuccess, onError) {
     var scriptOk = false;
     var callbackName = 'cb' + String(Math.random()).slice(-6);

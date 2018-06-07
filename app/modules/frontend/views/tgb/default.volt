@@ -4,7 +4,7 @@
     <a href="{{ item['url'] }}" target="_blank" class="list-container-item" >
         <div class="innerWrap">
             <div class="imgFrame">
-                <div target="_blank" style="background: url({{ item['img']['url'] }}) 50% 50% no-repeat; width: 250px; height: 250px;">
+                <div style="background: url({{ item['img']['url'] }}) 50% 50% no-repeat;">
                     &nbsp;
                 </div>
             </div>

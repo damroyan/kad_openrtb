@@ -135,7 +135,7 @@ class RelapTGB {
                 $assets = $data['native']['assets'];
                 foreach ($assets as $a) {
                     if (isset($a['title'])) {
-                        $return[$index]['text'] = $a['title']['text'];
+                        $return[$index]['text'] = trim($a['title']['text']);
                     }
 
                     if (isset($a['img'])) {

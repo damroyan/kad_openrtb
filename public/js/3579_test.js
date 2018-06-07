@@ -1,6 +1,6 @@
 //ваш id партнера
 var settings = {
-    partner_id : '50bd8c21bfafa6e4e962f6a948b1ef92',
+    partner_id : 'f08dfd477b90159ac5cef98cebe1ee90',
     count : 3,
     url: window.location.href.toString().substr(0, 512)
 };
