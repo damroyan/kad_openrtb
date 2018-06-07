@@ -14,11 +14,9 @@ class TgbController extends \Phalcon\Mvc\Controller
     public $log_dir = __DIR__.'/../../../../logs/';
 
     public $openrtb_sources = [
-        'relap'   => [
-            'videocapcinema'    => 'https://relap.io/openrtb/2_3/videocapcinema/bid_request',
-            'videocapvideo'     => 'https://relap.io/openrtb/2_3/videocapvideo/bid_request',
-            'videocap'          => 'https://relap.io/openrtb/2_3/videocap/bid_request',
-        ]
+        'rp_videocapcinema'    => 'https://relap.io/openrtb/2_3/videocapcinema/bid_request',
+        'rp_videocapvideo'     => 'https://relap.io/openrtb/2_3/videocapvideo/bid_request',
+        'rp_videocap'          => 'https://relap.io/openrtb/2_3/videocap/bid_request',
     ];
 
     public function initialize() {
@@ -68,10 +66,16 @@ class TgbController extends \Phalcon\Mvc\Controller
      */
     public function getAction()
     {
-        $openrtb_url = $this->openrtb_sources['relap']['videocap'];
+        $openrtb_url = $this->openrtb_sources['rp_videocap'];
 
         if ($this->partner_id == "" || !isset($this->partners[$this->partner_id]) || !isset($_GET['callback'])) {
             return json_encode(['response'=>'error']);
+        }
+
+        if ($source = $this->request->getQuery('source')) {
+            if (isset($this->openrtb_sources[$source])) {
+                $openrtb_url = $this->openrtb_sources[$source];
+            }
         }
 
         $tgb = new \Tizer\RelapTGB( $openrtb_url
