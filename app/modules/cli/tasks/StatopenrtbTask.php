@@ -152,8 +152,8 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                                             break;
                                         case'click':
                                             $stat['stat_openrtb_click']++;
-                                            if (isset($banner_cpc[$item['id']])) {
-                                                $stat['stat_openrtb_money'] += $banner_cpc[$item['id']];
+                                            if (isset($item['banner_id']) && isset($banner_cpc[$item['banner_id']])) {
+                                                $stat['stat_openrtb_money'] += $banner_cpc[$item['banner_id']];
                                             }
                                             break;
                                         default:
