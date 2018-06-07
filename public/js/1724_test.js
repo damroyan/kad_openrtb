@@ -1,4 +1,4 @@
-// politexpert - right-col x3
+// megapolisonline - footer x3
 var jolly_settings_1724 = {
     partner_id : '50bd8c21bfafa6e4e962f6a948b1ef92',
     count : 3,
@@ -67,17 +67,7 @@ jolly_request_1724(source_url + "/tgb/get/"
                     document.getElementById("container_1724").innerHTML = response.html;
                 }
             } else {
-                //document.getElementById("container_1724").style.cssText = "display:none;";
-
-                document.getElementById("kad_tgb_1724").innerHTML = "<div id=\"MOIPqqs88Lr7JBpbawiP\"></div>";
-
-                (function(d,s,b,id){var js=d.createElement(s);
-                    window.AD_DOMAIN_URL_SYS_8349582369 = '//smipar.pro/';
-                    js.src='//smipar.pro/js/v1.2/script.min.js';
-                    d.getElementsByTagName('head')[0].appendChild(js);
-                    if(typeof d[b]=='undefined') d[b]=[];
-                    d[b].push(id);})(document,'script','obTBlocks','MOIPqqs88Lr7JBpbawiP')
-
+                document.getElementById("container_1724").style.cssText = "display:none;";
             }
 
         }
