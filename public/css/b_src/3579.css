@@ -62,7 +62,7 @@
 }
 #container_3579 .list-container-item .imgFrame > div {
     background-position: center center;
-    background-size: cover;
+    background-size: 150px auto !important;
     background-repeat: no-repeat;
     display: block;
     width: 102px;
