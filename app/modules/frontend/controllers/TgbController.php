@@ -297,7 +297,7 @@ class TgbController extends \Phalcon\Mvc\Controller
             case 'imp':     // + impression
                 $this->response->setStatusCode(200);
                 $this->response->setContentType('image/gif');
-                $this->request->get($params['url']);
+                $this->response->send();
                 break;
 
             case 'click':   // + click
