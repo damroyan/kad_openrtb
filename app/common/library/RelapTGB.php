@@ -24,10 +24,12 @@ class RelapTGB {
     public $cookie = "";
 
     public $referrer = "unknown";
+    public $host = "undef";
 
     public $bidfloor = 0.1;
 
     public $partner_id = "undefined";
+
 
     function __construct($url, $debug = false) {
 
@@ -46,6 +48,15 @@ class RelapTGB {
 
     public function setReferrer($url = "") {
         $this->referrer = $url;
+
+        $this->host = 'undef';
+        if (is_string($url)) {
+            $u = parse_url($url);
+
+            if ($u['host'] && $u['host']!='') {
+                $this->host = $u['host'];
+            }
+        }
     }
 
     public function setBidfloor($price) {
@@ -154,6 +165,7 @@ class RelapTGB {
             'url'       => $url,
             'action'    => $action,
             'partner'   => $this->partner_id,
+            'host'      => $this->host,
         ];
         $params = array_merge($additional_params, $params);
 

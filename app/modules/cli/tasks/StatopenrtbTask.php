@@ -47,13 +47,17 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                     $stat = [
                         'stat_openrtb_date'  => $date,
                         'partner_id'         => $dir,
-                        'stat_openrtb_init'     => 0,
-                        'stat_openrtb_empty_responds' => 0,
-                        'stat_openrtb_castrated_responds'    => 0,
-                        'stat_openrtb_request'  => 0,
-                        'stat_openrtb_imp'      => 0,
-                        'stat_openrtb_click'    => 0,
-                        'stat_openrtb_money'    => 0.00,
+                        'hosts'              => [
+                            'undef'     => [
+                                'stat_openrtb_init'     => 0,
+                                'stat_openrtb_empty_responds' => 0,
+                                'stat_openrtb_castrated_responds'    => 0,
+                                'stat_openrtb_request'  => 0,
+                                'stat_openrtb_imp'      => 0,
+                                'stat_openrtb_click'    => 0,
+                                'stat_openrtb_money'    => 0.00,
+                            ]
+                        ],
                     ];
 
                     // стата по запросам к серверу по подбору объяв
@@ -83,10 +87,33 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                             $stat['stat_openrtb_init'] = count($data_arr);
 
                             foreach ($data_arr as $d) {
+
+                                $host = 'undef';
+                                if (isset($d['referer'])) {
+                                    $u = parse_url($d['referer']);
+
+                                    if (isset($u['host'])) {
+                                        $host = $u['host'];
+                                        if (!isset($stat['hosts'][$host])) {
+                                            $stat['hosts'][$host] = [
+                                                'stat_openrtb_init'     => 0,
+                                                'stat_openrtb_empty_responds' => 0,
+                                                'stat_openrtb_castrated_responds'    => 0,
+                                                'stat_openrtb_request'  => 0,
+                                                'stat_openrtb_imp'      => 0,
+                                                'stat_openrtb_click'    => 0,
+                                                'stat_openrtb_money'    => 0.00,
+                                            ];
+                                        }
+                                    }
+
+                                    $stat['hosts'][$host]['stat_openrtb_init'] ++;
+                                }
+
                                 if ($d['count_received'] == 0) {
-                                    $stat['stat_openrtb_empty_responds']++;
+                                    $stat['hosts'][$host]['stat_openrtb_empty_responds']++;
                                 } elseif ($d['count_received'] != $d['count_needed']) {
-                                    $stat['stat_openrtb_castrated_responds']++;
+                                    $stat['hosts'][$host]['stat_openrtb_castrated_responds']++;
                                 }
                             }
                         } else {
@@ -140,20 +167,26 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
 
                             if (count($data_arr)) {
                                 foreach ($data_arr as $item) {
+
+                                    $host = 'undef';
+                                    if (isset($item['host'])) {
+                                        $host = $item['host'];
+                                    }
+
                                     switch($item['action']) {
                                         case 'request':
 
-                                            $stat['stat_openrtb_request']++;
+                                            $stat['hosts'][$host]['stat_openrtb_request']++;
                                             $banner_cpc[$item['id']] = $item['price_cpc'];
 
                                             break;
                                         case 'imp':
-                                            $stat['stat_openrtb_imp']++;
+                                            $stat['hosts'][$host]['stat_openrtb_imp']++;
                                             break;
                                         case'click':
-                                            $stat['stat_openrtb_click']++;
+                                            $stat['hosts'][$host]['stat_openrtb_click']++;
                                             if (isset($item['banner_id']) && isset($banner_cpc[$item['banner_id']])) {
-                                                $stat['stat_openrtb_money'] += $banner_cpc[$item['banner_id']];
+                                                $stat['hosts'][$host]['stat_openrtb_money'] += $banner_cpc[$item['banner_id']];
                                             }
                                             break;
                                         default:

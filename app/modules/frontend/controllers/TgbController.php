@@ -97,7 +97,8 @@ class TgbController extends \Phalcon\Mvc\Controller
             $count = 10;
         }
 
-        $blocks = $tgb->get(4);
+        $blocks = $tgb->get($count);
+
 
         $logger = new \Tizer\Logger($this->log_dir.strtolower($this->partner_id)
             , \Tizer\Logger::DEBUG
@@ -121,8 +122,6 @@ class TgbController extends \Phalcon\Mvc\Controller
         $logger->complete();
 
         if (count($blocks) == 0) {
-
-
 
             return $_GET['callback'].'('.json_encode(['response'=>'ok', 'count'=>0,'html'=>'']).')';
             exit;
@@ -256,7 +255,8 @@ class TgbController extends \Phalcon\Mvc\Controller
             'client'            => mb_strtolower($params['client']),
             'ip'                => \Tizer\RelapTGB::getIp(),
             'ua'                => mb_substr(mb_strtolower($_SERVER['HTTP_USER_AGENT']), 0, 512),
-            'url'               => isset($params['url']) ? $params['url'] : null
+            'url'               => isset($params['url']) ? $params['url'] : null,
+            'host'              => $params['host'],
 
         ];
 
