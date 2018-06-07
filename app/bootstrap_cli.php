@@ -28,6 +28,11 @@ include APP_PATH . '/config/services_cli.php';
 include APP_PATH . '/config/loader.php';
 
 /**
+ * Include functions
+ */
+include APP_PATH . '/common/function.php';
+
+/**
  * Get config service for use in inline setup below
  */
 $config = $di->getConfig();
