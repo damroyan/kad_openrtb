@@ -207,8 +207,6 @@ class TgbController extends \Phalcon\Mvc\Controller
             $params['partner'] = 'undef';
         }
 
-        $logger = new \Tizer\Logger($this->log_dir.strtolower($params['partner']));
-
         switch ($params['action']) {
             case 'request': // + php
             case 'error':   // + php
@@ -247,6 +245,11 @@ class TgbController extends \Phalcon\Mvc\Controller
             return;
         }
 
+
+        if (!$params['host'] || $params['host'] == '') {
+            $params['host'] = 'undef';
+        }
+
         $message = [
             'action'            => $params['action'],
             'banner_id'         => $params['id'],
@@ -260,6 +263,7 @@ class TgbController extends \Phalcon\Mvc\Controller
 
         ];
 
+        $logger = new \Tizer\Logger($this->log_dir.strtolower($params['partner']));
         try {
             $logger->log(
                 json_encode($message, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT)
