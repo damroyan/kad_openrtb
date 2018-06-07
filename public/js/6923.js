@@ -64,14 +64,15 @@ scriptRequest(source_url + "/tgb/get/"
             } else {
                 //document.getElementById("container_6923").style.cssText = "display:none;";
 
-                document.getElementById("kad_tgb_6923").innerHTML = "<div id=\"Ga17EMtE5mpEPwXrXEGj\"></div>";
 
-               (function(d,s,b,id){var js=d.createElement(s);
+                document.getElementById("kad_tgb_6923").innerHTML = " <div id=\"JefqDo9Vx24TgzDMmlWy\"></div>";
+
+                (function(d,s,b,id){var js=d.createElement(s);
                     window.AD_DOMAIN_URL_SYS_8349582369 = '//smipar.pro/';
                     js.src='//smipar.pro/js/v1.2/script.min.js';
                     d.getElementsByTagName('head')[0].appendChild(js);
                     if(typeof d[b]=='undefined') d[b]=[];
-                    d[b].push(id);})(document,'script','obTBlocks','Ga17EMtE5mpEPwXrXEGj')
+                    d[b].push(id);})(document,'script','obTBlocks','JefqDo9Vx24TgzDMmlWy')
 
             }
 
