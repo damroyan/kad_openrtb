@@ -2,8 +2,8 @@
 var jolly_settings_1724 = {
     partner_id : '31698b6796a85f7781e6ae8227856659',
     count : 3,
-    url: window.location.href.toString().substr(0, 512),
-    source: 'rp_videocapcinema'
+    url: window.location.href.toString().substr(0, 512)
+    //,source: 'rp_videocapcinema'
 };
 
 if (typeof jolly_callback_1724 === "undefined") {
