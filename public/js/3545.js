@@ -66,14 +66,14 @@ scriptRequest(source_url + "/tgb/get/"
             } else {
                 //document.getElementById("container_3545").style.cssText = "display:none;";
 
-                document.getElementById("kad_tgb_3545").innerHTML = "<div id=\"Ga17EMtE5mpEPwXrXEGj\"></div>";
+                document.getElementById("kad_tgb_3545").innerHTML = "<div id=\"ClvXcLd9axZSazEbWKDf\"></div>\n";
 
-               (function(d,s,b,id){var js=d.createElement(s);
+                (function(d,s,b,id){var js=d.createElement(s);
                     window.AD_DOMAIN_URL_SYS_8349582369 = '//smipar.pro/';
                     js.src='//smipar.pro/js/v1.2/script.min.js';
                     d.getElementsByTagName('head')[0].appendChild(js);
                     if(typeof d[b]=='undefined') d[b]=[];
-                    d[b].push(id);})(document,'script','obTBlocks','Ga17EMtE5mpEPwXrXEGj')
+                    d[b].push(id);})(document,'script','obTBlocks','ClvXcLd9axZSazEbWKDf')
 
             }
 
