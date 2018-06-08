@@ -129,6 +129,7 @@ class RelapTGB {
                     'price_cpc'         => floatval($b['price_cpc']),
                     'ecpm'              => floatval($b['price']),
                     'id'                => $b['id'],
+                    'host'              => $this->host,
                 ];
 
                 $index = count($return)-1;
