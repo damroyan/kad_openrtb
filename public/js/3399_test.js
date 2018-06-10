@@ -60,7 +60,7 @@ scriptRequest(source_url + "/tgb/get/"
     , function (response) {
         if (response.response == 'ok') {
             if (response.count
-                && response.count >= settings.count
+              //  && response.count >= settings.count
              ) {
                 if (response.html) {
                     document.getElementById("container_3399").innerHTML = response.html;
