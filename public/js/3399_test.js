@@ -1,7 +1,7 @@
 //ваш id партнера
 var settings = {
     partner_id : 'f08dfd477b90159ac5cef98cebe1ee90',
-    count : 3,
+    count : 4,
     url: window.location.href.toString().substr(0, 512),
     source: 'rp_videocapcinema'
 };
