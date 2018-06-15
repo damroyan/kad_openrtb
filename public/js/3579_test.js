@@ -61,7 +61,8 @@ jolly_request_3579(source_url + "/tgb/get/"
     , function (response) {
         if (response.response == 'ok') {
             //console.log(response);
-            if (response.count && response.count == jolly_settings_3579.count
+            if (response.count
+                //&& response.count == jolly_settings_3579.count
             ) {
                 if (response.html) {
                     document.getElementById("container_3579").innerHTML = response.html;
