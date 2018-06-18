@@ -242,7 +242,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                                 'stat_openrtb_money' => $data['stat_openrtb_money'],
                             ]);
 
-                            var_dump($line->save());
+                            $line->save();
                         }
                     }
 
