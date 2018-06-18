@@ -27,6 +27,8 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
             } else {
                 Console::WriteLine('Дата не введена или введена некорректно. Ожидаем на вход или date=2019-01-01 или day_back=N где N количество дней назад', Console::COLOR_RED);
             }
+
+            $this->updateStat($day);
         }
     }
 
