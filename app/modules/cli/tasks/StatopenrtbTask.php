@@ -161,7 +161,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                         Console::WriteLine("Сканим файл запросов: ".$file_init, Console::COLOR_GREEN);
 
                         $f_init = $fopen($file_init,'r');
-                        while (($line = $fgets($file_init, 4096)) !== false) {
+                        while (($line = $fgets($f_init, 4096)) !== false) {
 
                             $d = $this->csv2array($line, false);
                             if ($d[0]) {
@@ -255,7 +255,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                         Console::WriteLine("Сканим файл тизеров: ".$file_log, Console::COLOR_GREEN);
 
                         $f_log = $fopen($file_log,'r');
-                        while (($line = $fgets($file_log, 4096)) !== false) {
+                        while (($line = $fgets($f_log, 4096)) !== false) {
 
                             $data_arr = $this->csv2array($line, false);
 
