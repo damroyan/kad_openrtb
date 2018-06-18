@@ -18,6 +18,7 @@ class Module implements ModuleDefinitionInterface
 
         $loader->registerNamespaces([
             'Tizer\Modules\Cli\Tasks' => __DIR__ . '/tasks/',
+            'Tizer\Common\Models' => APP_PATH . '/common/models/',
         ]);
 
         $loader->register();

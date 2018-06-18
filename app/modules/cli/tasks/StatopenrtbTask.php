@@ -1,6 +1,7 @@
 <?php
 namespace Tizer\Modules\Cli\Tasks;
 
+use Tizer\Common\Models\StatOpenrtb;
 use Tizer\Console;
 
 class StatopenrtbTask extends \Phalcon\Cli\Task
@@ -204,6 +205,40 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
 
                         }
                         fclose($f_log);
+                    }
+
+                    if (count($stat['hosts'])) {
+                        foreach ($stat['hosts'] as $host => $data) {
+                            $line = StatOpenrtb::findFirst([
+                                'conditions'    => 'stat_openrtb_date = :stat_openrtb_date: AND partner_id = :partner_id: AND stat_openrtb_host = :stat_openrtb_host:',
+                                'bind'          => [
+                                    'stat_openrtb_date'          => $stat['stat_openrtb_date'],
+                                    'partner_id'                 => $stat['partner_id'],
+                                    'stat_openrtb_host'          => $host,
+                                ]
+                            ]);
+
+                            if (!$line) {
+                                $line = new StatOpenrtb();
+                                $line->assign([
+                                    'stat_openrtb_date' => $stat['stat_openrtb_date'],
+                                    'partner_id'        => $stat['partner_id'],
+                                    'stat_openrtb_host' => $host,
+                                ]);
+                            }
+
+                            $line->assign([
+                                'stat_openrtb_init' => $data['stat_openrtb_init'],
+                                'stat_openrtb_empty_responds' => $data['stat_openrtb_empty_responds'],
+                                'stat_openrtb_castrated_responds' => $data['stat_openrtb_castrated_responds'],
+                                'stat_openrtb_request' => $data['stat_openrtb_request'],
+                                'stat_openrtb_imp' => $data['stat_openrtb_imp'],
+                                'stat_openrtb_click' => $data['stat_openrtb_click'],
+                                'stat_openrtb_money' => $data['stat_openrtb_money'],
+                            ]);
+
+                            var_dump($line->save());
+                        }
                     }
 
                     print_r($stat);

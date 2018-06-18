@@ -23,6 +23,7 @@ class Module implements ModuleDefinitionInterface
         $loader->registerNamespaces([
             'Tizer\Modules\Frontend\Controllers' => __DIR__ . '/controllers/',
             'Tizer\Modules\Frontend\Models' => __DIR__ . '/models/',
+            'Tizer\Common\Models' => APP_PATH . '/common/models/',
         ]);
 
         $loader->register();

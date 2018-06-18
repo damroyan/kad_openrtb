@@ -1,6 +1,7 @@
 <?php
 namespace Tizer\Modules\Frontend\Controllers;
 
+use \Tizer\Common\Models\StatOpenrtb;
 use \Tizer\Uuid as Uuid;
 
 class TgbController extends \Phalcon\Mvc\Controller
