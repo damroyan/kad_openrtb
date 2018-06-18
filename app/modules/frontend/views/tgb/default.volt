@@ -1,5 +1,6 @@
 
 <div class="list-container">
+    {#<div class="list-header">Реклама</div>#}
 {% for item in items %}
     <a href="{{ item['url'] }}" target="_blank" class="list-container-item" >
         <div class="innerWrap">

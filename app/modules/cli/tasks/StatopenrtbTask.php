@@ -29,7 +29,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
         }
     }
 
-    protected function updateStat($date, $file_get_contents = true) {
+    protected function updateStat($date) {
         Console::WriteLine("Ищем файлеги за: ".$date, Console::COLOR_LIGHT_GREEN);
 
         $logsDir = $this->config->application->logsDir;
@@ -81,50 +81,50 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                      */
                     if (is_file($file_init)) {
                         Console::WriteLine("Сканим файл запросов: ".$file_init, Console::COLOR_GREEN);
-                        if ($file_get_contents) {
-                            $data_arr = $this->csv2array(file_get_contents($file_init), false);
 
-                            $stat['stat_openrtb_init'] = count($data_arr);
+                        $f_init = fopen($file_init,'r');
+                        while (($line = fgets($f_init, 4096)) !== false) {
 
-                            foreach ($data_arr as $d) {
-
-                                $host = 'undef';
-                                if (isset($d['referer'])) {
-                                    $u = parse_url($d['referer']);
-
-                                    if (isset($u['host'])) {
-                                        $host = $u['host'];
-                                        if (!isset($stat['hosts'][$host])) {
-                                            $stat['hosts'][$host] = [
-                                                'stat_openrtb_init'     => 0,
-                                                'stat_openrtb_empty_responds' => 0,
-                                                'stat_openrtb_castrated_responds'    => 0,
-                                                'stat_openrtb_request'  => 0,
-                                                'stat_openrtb_imp'      => 0,
-                                                'stat_openrtb_click'    => 0,
-                                                'stat_openrtb_money'    => 0.00,
-                                            ];
-                                        }
-                                    }
-
-                                    $stat['hosts'][$host]['stat_openrtb_init'] ++;
-                                }
-
-                                if ($d['count_received'] == 0) {
-                                    $stat['hosts'][$host]['stat_openrtb_empty_responds']++;
-                                } elseif ($d['count_received'] != $d['count_needed']) {
-                                    $stat['hosts'][$host]['stat_openrtb_castrated_responds']++;
-                                }
+                            $d = $this->csv2array($line, false);
+                            if ($d[0]) {
+                                $d = $d[0];
                             }
-                        } else {
 
-                            // todo допилить построчное забирание из файла.
-                            // Использвоать при пересчете уже не наполняемых файлов
 
-//                            foreach ($data_arr as $item) {
-//                                $banner_cpc[$item['banner_id']]     = 1;
-//                            }
+                            $stat['stat_openrtb_init']++;
+
+                            $host = 'undef';
+                            if (isset($d['referer'])) {
+                                $u = parse_url($d['referer']);
+
+                                if (isset($u['host'])) {
+                                    $host = $u['host'];
+                                    if (!isset($stat['hosts'][$host])) {
+                                        $stat['hosts'][$host] = [
+                                            'stat_openrtb_init' => 0,
+                                            'stat_openrtb_empty_responds' => 0,
+                                            'stat_openrtb_castrated_responds' => 0,
+                                            'stat_openrtb_request' => 0,
+                                            'stat_openrtb_imp' => 0,
+                                            'stat_openrtb_click' => 0,
+                                            'stat_openrtb_money' => 0.00,
+                                        ];
+                                    }
+                                }
+
+                                $stat['hosts'][$host]['stat_openrtb_init']++;
+                            } else {
+                                continue;
+                            }
+
+                            if ($d['count_received'] == 0) {
+                                $stat['hosts'][$host]['stat_openrtb_empty_responds']++;
+                            } elseif ($d['count_received'] != $d['count_needed']) {
+                                $stat['hosts'][$host]['stat_openrtb_castrated_responds']++;
+                            }
+
                         }
+                        fclose($f_init);
                     }
 
                     // фактическая стата по тому, как объявы открутились
@@ -162,45 +162,47 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                     $banner_cpc = [];
                     if (is_file($file_log)) {
                         Console::WriteLine("Сканим файл тизеров: ".$file_log, Console::COLOR_GREEN);
-                        if ($file_get_contents) {
-                            $data_arr = $this->csv2array(file_get_contents($file_log), false);
+
+                        $f_log = fopen($file_log,'r');
+                        while (($line = fgets($f_log, 4096)) !== false) {
+
+                            $data_arr = $this->csv2array($line, false);
 
                             if (count($data_arr)) {
-                                foreach ($data_arr as $item) {
+                                $item = $data_arr[0];
 
-                                    $host = 'undef';
-                                    if (isset($item['host'])) {
-                                        $host = $item['host'];
-                                    }
-
-                                    switch($item['action']) {
-                                        case 'request':
-
-                                            $stat['hosts'][$host]['stat_openrtb_request']++;
-                                            $banner_cpc[$item['id']] = $item['price_cpc'];
-
-                                            break;
-                                        case 'imp':
-                                            $stat['hosts'][$host]['stat_openrtb_imp']++;
-                                            break;
-                                        case'click':
-                                            $stat['hosts'][$host]['stat_openrtb_click']++;
-                                            if (isset($item['banner_id']) && isset($banner_cpc[$item['banner_id']])) {
-                                                $stat['hosts'][$host]['stat_openrtb_money'] += $banner_cpc[$item['banner_id']];
-                                            }
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                $host = 'undef';
+                                if (isset($item['host'])) {
+                                    $host = $item['host'];
                                 }
 
-                               // print_r($banner_cpc);
+                                switch ($item['action']) {
+                                    case 'request':
+
+                                        $stat['hosts'][$host]['stat_openrtb_request']++;
+                                        $banner_cpc[$item['id']] = $item['price_cpc'];
+
+                                        break;
+                                    case 'imp':
+                                        $stat['hosts'][$host]['stat_openrtb_imp']++;
+                                        break;
+                                    case'click':
+                                        $stat['hosts'][$host]['stat_openrtb_click']++;
+                                        if (isset($item['banner_id']) && isset($banner_cpc[$item['banner_id']])) {
+                                            $stat['hosts'][$host]['stat_openrtb_money'] += $banner_cpc[$item['banner_id']];
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+
+                                // print_r($banner_cpc);
                             }
 
-                        } else {
-                            // todo допилить построчное забирание из файла.
-                            // Использвоать при пересчете уже не наполняемых файлов
+
                         }
+                        fclose($f_log);
                     }
 
                     print_r($stat);
