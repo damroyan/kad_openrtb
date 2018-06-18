@@ -209,6 +209,11 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
 
                     if (count($stat['hosts'])) {
                         foreach ($stat['hosts'] as $host => $data) {
+
+                            if (!$data['stat_openrtb_init'] || $data['stat_openrtb_init'] == 0) {
+                                continue;
+                            }
+
                             $line = StatOpenrtb::findFirst([
                                 'conditions'    => 'stat_openrtb_date = :stat_openrtb_date: AND partner_id = :partner_id: AND stat_openrtb_host = :stat_openrtb_host:',
                                 'bind'          => [
