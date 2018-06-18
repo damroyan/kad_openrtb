@@ -145,7 +145,6 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                     $is_txt = false;
                     $is_gz = false;
                     if (($is_txt = is_file($file_init.'.txt')) || ($is_gz = is_file($file_init.'.txt.gz'))) {
-                        Console::WriteLine("Сканим файл запросов: ".$file_init, Console::COLOR_GREEN);
 
                         $fopen = 'fopen';
                         $fgets = 'fgets';
@@ -158,6 +157,8 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                         } else {
                             $file_init = $file_init.'.txt';
                         }
+
+                        Console::WriteLine("Сканим файл запросов: ".$file_init, Console::COLOR_GREEN);
 
                         $f_init = $fopen($file_init,'r');
                         while (($line = $fgets($file_init, 4096)) !== false) {
@@ -238,7 +239,6 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
 
                     $banner_cpc = [];
                     if (($is_txt = is_file($file_log.'.txt')) || ($is_gz = is_file($file_log.'.txt.gz'))) {
-                        Console::WriteLine("Сканим файл тизеров: ".$file_log, Console::COLOR_GREEN);
 
                         $fopen = 'fopen';
                         $fgets = 'fgets';
@@ -251,6 +251,8 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                         } else {
                             $file_log = $file_log.'.txt';
                         }
+
+                        Console::WriteLine("Сканим файл тизеров: ".$file_log, Console::COLOR_GREEN);
 
                         $f_log = $fopen($file_log,'r');
                         while (($line = $fgets($file_log, 4096)) !== false) {
