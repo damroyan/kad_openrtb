@@ -253,7 +253,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                         }
 
                         $f_log = $fopen($file_log,'r');
-                        while (($line = $fgets($f_log, 4096)) !== false) {
+                        while (($line = $fgets($file_log, 4096)) !== false) {
 
                             $data_arr = $this->csv2array($line, false);
 
