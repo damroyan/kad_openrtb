@@ -61,19 +61,22 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
 
                                 $file_ext = explode('.',$file);
 
-                                if ($file_ext[count($file_ext)-1]=='txt') {
-                                    if (isset($date[0]) && strtotime($date[0]) < time()-60 * 60 * 24 * $max_log_days) {
-                                        Console::WriteLine('Файл требует сжатия:'.$file);
+                                if (isset($date[0])) {
+                                    if ($file_ext[count($file_ext) - 1] == 'txt') {
+                                        if (strtotime($date[0]) < time() - 60 * 60 * 24 * $max_log_days) {
+                                            Console::WriteLine('Файл требует сжатия:' . $file);
 
-                                        if ($this->gzCompressFile($scan_dir.$file)) {
-                                            unlink($scan_dir.$file);
-                                        };
+                                            if ($this->gzCompressFile($scan_dir . $file)) {
+                                                unlink($scan_dir . $file);
+                                            };
+                                        }
                                     }
-                                }
 
-                                if ($file_ext[count($file_ext)-1]=='gz') {
-                                    if (isset($date[0]) && strtotime($date[0]) < time() - 60 * 60 * 24 * $max_gzip_days) {
-                                        unlink($scan_dir.$file);
+
+                                    if ($file_ext[count($file_ext) - 1] == 'gz') {
+                                        if (strtotime($date[0]) < time() - 60 * 60 * 24 * $max_gzip_days) {
+                                            unlink($scan_dir . $file);
+                                        }
                                     }
                                 }
 
@@ -157,7 +160,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                         }
 
                         $f_init = $fopen($file_init,'r');
-                        while (($line = $fgets($f_init, 4096)) !== false) {
+                        while (($line = $fgets($file_init, 4096)) !== false) {
 
                             $d = $this->csv2array($line, false);
                             if ($d[0]) {
