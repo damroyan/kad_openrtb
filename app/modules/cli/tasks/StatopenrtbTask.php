@@ -47,6 +47,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                     $stat = [
                         'stat_openrtb_date'  => $date,
                         'partner_id'         => $dir,
+                        'stat_openrtb_init'  => 0,
                         'hosts'              => [
                             'undef'     => [
                                 'stat_openrtb_init'     => 0,
