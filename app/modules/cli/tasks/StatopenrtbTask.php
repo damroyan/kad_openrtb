@@ -34,6 +34,60 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
         }
     }
 
+    /**
+     * Освобождает память. Логи старше $max_log_days сжимает, логи старше $max_gzip_days удаляет
+     */
+    public function freeMemoryAction() {
+        $max_gzip_days = 60;
+        $max_log_days = 3;
+
+        $logsDir = $this->config->application->logsDir;
+
+        $dirs = scandir($logsDir);
+
+        if (count($dirs)) {
+            foreach ($dirs as $dir) {
+                if ($dir != '.' && $dir != '..' && is_dir($logsDir . $dir)) {
+                    Console::WriteLine("Сканим директорию: " . $dir);
+
+                    $scan_dir = $logsDir . $dir . '/';
+
+                    $files = scandir($scan_dir);
+
+                    if (count($files)) {
+                        foreach ($files as $file) {
+                            if (is_file($scan_dir.$file)){
+                                preg_match('@\d{4}\-\d{2}\-\d{2}@ui', $file,$date);
+
+                                $file_ext = explode('.',$file);
+
+                                if ($file_ext[count($file_ext)-1]=='txt') {
+                                    if (isset($date[0]) && strtotime($date[0]) < time()-60 * 60 * 24 * $max_log_days) {
+                                        Console::WriteLine('Файл требует сжатия:'.$file);
+
+                                        if ($this->gzCompressFile($scan_dir.$file)) {
+                                            unlink($scan_dir.$file);
+                                        };
+                                    }
+                                }
+
+                                if ($file_ext[count($file_ext)-1]=='gz') {
+                                    if (isset($date[0]) && strtotime($date[0]) < time() - 60 * 60 * 24 * $max_gzip_days) {
+                                        unlink($scan_dir.$file);
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+
+                 //   $file_init = $logsDir . $dir . '/init_' . $date . '.txt';
+                 //   $file_log = $logsDir . $dir . '/log_' . $date . '.txt';
+                }
+            }
+        }
+    }
+
     protected function updateStat($date) {
         Console::WriteLine("Ищем файлеги за: ".$date, Console::COLOR_LIGHT_GREEN);
 
@@ -46,8 +100,8 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                 if ($dir!= '.' && $dir!='..' && is_dir($logsDir.$dir)) {
                     Console::WriteLine("Сканим директорию: ".$dir);
 
-                    $file_init = $logsDir.$dir.'/init_'.$date.'.txt';
-                    $file_log = $logsDir.$dir.'/log_'.$date.'.txt';
+                    $file_init = $logsDir.$dir.'/init_'.$date;
+                    $file_log = $logsDir.$dir.'/log_'.$date;
 
                     $stat = [
                         'stat_openrtb_date'  => $date,
@@ -85,11 +139,25 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                     [date] => 2018-06-06
                     )
                      */
-                    if (is_file($file_init)) {
+                    $is_txt = false;
+                    $is_gz = false;
+                    if (($is_txt = is_file($file_init.'.txt')) || ($is_gz = is_file($file_init.'.txt.gz'))) {
                         Console::WriteLine("Сканим файл запросов: ".$file_init, Console::COLOR_GREEN);
 
-                        $f_init = fopen($file_init,'r');
-                        while (($line = fgets($f_init, 4096)) !== false) {
+                        $fopen = 'fopen';
+                        $fgets = 'fgets';
+                        $fclose = 'fclose';
+                        if ($is_gz) {
+                            $fopen = 'gzopen';
+                            $fgets = 'gzgets';
+                            $fclose = 'gzclose';
+                            $file_init = $file_init.'.txt.gz';
+                        } else {
+                            $file_init = $file_init.'.txt';
+                        }
+
+                        $f_init = $fopen($file_init,'r');
+                        while (($line = $fgets($f_init, 4096)) !== false) {
 
                             $d = $this->csv2array($line, false);
                             if ($d[0]) {
@@ -130,7 +198,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                             }
 
                         }
-                        fclose($f_init);
+                        $fclose($f_init);
                     }
 
                     // фактическая стата по тому, как объявы открутились
@@ -166,11 +234,23 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                      */
 
                     $banner_cpc = [];
-                    if (is_file($file_log)) {
+                    if (($is_txt = is_file($file_log.'.txt')) || ($is_gz = is_file($file_log.'.txt.gz'))) {
                         Console::WriteLine("Сканим файл тизеров: ".$file_log, Console::COLOR_GREEN);
 
-                        $f_log = fopen($file_log,'r');
-                        while (($line = fgets($f_log, 4096)) !== false) {
+                        $fopen = 'fopen';
+                        $fgets = 'fgets';
+                        $fclose = 'fclose';
+                        if ($is_gz) {
+                            $fopen = 'gzopen';
+                            $fgets = 'gzgets';
+                            $fclose = 'gzclose';
+                            $file_log = $file_log.'.txt.gz';
+                        } else {
+                            $file_log = $file_log.'.txt';
+                        }
+
+                        $f_log = $fopen($file_log,'r');
+                        while (($line = $fgets($f_log, 4096)) !== false) {
 
                             $data_arr = $this->csv2array($line, false);
 
@@ -208,7 +288,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
 
 
                         }
-                        fclose($f_log);
+                        $fclose($f_log);
                     }
 
                     if (count($stat['hosts'])) {
@@ -340,6 +420,30 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
 
         return $p;
     }
+
+    protected function gzCompressFile($source, $level = 9){
+        $dest = $source . '.gz';
+        $mode = 'wb' . $level;
+        $error = false;
+        if ($fp_out = gzopen($dest, $mode)) {
+            if ($fp_in = fopen($source,'rb')) {
+                while (!feof($fp_in))
+                    gzwrite($fp_out, fread($fp_in, 1024 * 512));
+                fclose($fp_in);
+            } else {
+                $error = true;
+            }
+            gzclose($fp_out);
+        } else {
+            $error = true;
+        }
+        if ($error)
+            return false;
+        else
+            return true;
+    }
+
+
 
 
 }
