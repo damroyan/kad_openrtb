@@ -10,7 +10,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
     {
         $params = $this->getParams($params);
 
-        if (preg_match('@^\d{4}\-\d{2}\-\d{2}$@ui', $params['date'])) {
+        if (isset($params['date']) && preg_match('@^\d{4}\-\d{2}\-\d{2}$@ui', $params['date'])) {
             Console::WriteLine("Подсчет статы за дату: ".$params['date'], Console::COLOR_GREEN);
 
             $this->updateStat($params['date']);
@@ -23,12 +23,14 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                     $day = $data->sub(new \DateInterval("P{$i}D"))->format('Y-m-d');
 
                     Console::WriteLine("Подсчет статы за дату: ".$day, Console::COLOR_GREEN);
+
+                    $this->updateStat($day);
                 }
             } else {
                 Console::WriteLine('Дата не введена или введена некорректно. Ожидаем на вход или date=2019-01-01 или day_back=N где N количество дней назад', Console::COLOR_RED);
             }
 
-            $this->updateStat($day);
+
         }
     }
 
