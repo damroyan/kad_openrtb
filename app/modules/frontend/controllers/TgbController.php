@@ -12,14 +12,15 @@ class TgbController extends \Phalcon\Mvc\Controller
         'f08dfd477b90159ac5cef98cebe1ee90' => 'fan_3399_test',
         '31698b6796a85f7781e6ae8227856659'  => 'megapolisonline.ru',
         '3fbedfa6485396a0270f537c792fc525'  => 'advmaker',
+        '2aa225f1f6acc0e3159456f98de2bcd1'  => 'adbless'
     ];
 
     public $log_dir = __DIR__.'/../../../../logs/';
 
     public $openrtb_sources = [
-        'rp_videocapcinema'    => 'https://relap.io/openrtb/2_3/videocapcinema/bid_request',
-        'rp_videocapvideo'     => 'https://relap.io/openrtb/2_3/videocapvideo/bid_request',
-        'rp_videocap'          => 'https://relap.io/openrtb/2_3/videocap/bid_request',
+        'rp_cinema'    => 'https://relap.io/openrtb/2_3/videocapcinema/bid_request',
+        'rp_capvideo'     => 'https://relap.io/openrtb/2_3/videocapvideo/bid_request',
+        'rp_cap'          => 'https://relap.io/openrtb/2_3/videocap/bid_request',
     ];
 
     public function initialize() {
@@ -69,7 +70,7 @@ class TgbController extends \Phalcon\Mvc\Controller
      */
     public function getAction()
     {
-        $openrtb_url = $this->openrtb_sources['rp_videocap'];
+        $openrtb_url = $this->openrtb_sources['rp_cap'];
 
         if ($this->partner_id == "" || !isset($this->partners[$this->partner_id]) || !isset($_GET['callback'])) {
             return json_encode(['response'=>'error']);

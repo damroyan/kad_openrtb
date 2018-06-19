@@ -3,7 +3,7 @@ var jolly_settings_3579 = {
     partner_id : '50bd8c21bfafa6e4e962f6a948b1ef92',
     count : 3,
     url: window.location.href.toString().substr(0, 512)
-    //,source: 'rp_videocapcinema'
+    //,source: 'rp_cinema'
 };
 
 if (typeof jolly_callback_3579 === "undefined") {
