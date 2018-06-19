@@ -12,7 +12,8 @@ class TgbController extends \Phalcon\Mvc\Controller
         'f08dfd477b90159ac5cef98cebe1ee90' => 'fan_3399_test',
         '31698b6796a85f7781e6ae8227856659'  => 'megapolisonline.ru',
         '3fbedfa6485396a0270f537c792fc525'  => 'advmaker',
-        '2aa225f1f6acc0e3159456f98de2bcd1'  => 'adbless'
+        '2aa225f1f6acc0e3159456f98de2bcd1'  => 'adbless',
+        '2f3a4fccca6406e35bcf33e92dd93135'  => 'magic',
     ];
 
     public $log_dir = __DIR__.'/../../../../logs/';
