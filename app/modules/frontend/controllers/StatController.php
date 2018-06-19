@@ -21,7 +21,8 @@ class StatController extends \Phalcon\Mvc\Controller
             'conditions'    => 'partner_id = :partner_id:',
             'bind'          => [
                 'partner_id'    => $partner_id,
-            ]
+            ],
+            'order' => 'stat_openrtb_date',
         ])->toArray();
 
         $koeff = [
@@ -33,15 +34,37 @@ class StatController extends \Phalcon\Mvc\Controller
             '2f3a4fccca6406e35bcf33e92dd93135'  => 1,
         ];
 
+        $result = [];
         if (count($stat) > 0) {
             foreach ($stat as $values) {
-                echo date('Y-m-d',strtotime($values['stat_openrtb_date']));
-                echo ';'.$values['stat_openrtb_init'];
-                echo ';'.($values['stat_openrtb_money']*$koeff[$partner_id]);
+                $date = date('Y-m-d',strtotime($values['stat_openrtb_date']));
+                $money = $values['stat_openrtb_money']*$koeff[$partner_id];
 
-                echo '<br>';
+                if (!isset($result[$date])) {
+                    $result[$date] = [
+                        'date'  => $date,
+                        'init'  => $values['stat_openrtb_init'],
+                        'money' => $money,
+                    ];
+                } else {
+                    $result[$date]['init']  += $values['stat_openrtb_init'];
+                    $result[$date]['money'] += $money;
+                }
+            }
+
+            foreach ($result as $r) {
+                echo implode(';',$r);
+                echo '<br />';
             }
         }
+
+
+
+//        echo date('Y-m-d',strtotime($values['stat_openrtb_date']));
+//        echo ';'.$values['stat_openrtb_init'];
+//        echo ';'.($values['stat_openrtb_money']*$koeff[$partner_id]);
+//
+//        echo '<br>';
         exit;
     }
 }
