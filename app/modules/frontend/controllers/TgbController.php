@@ -1,15 +1,14 @@
 <?php
 namespace Tizer\Modules\Frontend\Controllers;
 
-use \Tizer\Common\Models\StatOpenrtb;
 use \Tizer\Uuid as Uuid;
 
 class TgbController extends \Phalcon\Mvc\Controller
 {
 
     public $partners = [
-        '50bd8c21bfafa6e4e962f6a948b1ef92' => 'fan',
-        'f08dfd477b90159ac5cef98cebe1ee90' => 'fan_3399_test',
+        '50bd8c21bfafa6e4e962f6a948b1ef92'  => 'fan',
+        'f08dfd477b90159ac5cef98cebe1ee90'  => 'fan_3399_test',
         '31698b6796a85f7781e6ae8227856659'  => 'megapolisonline.ru',
         '3fbedfa6485396a0270f537c792fc525'  => 'advmaker',
         '2aa225f1f6acc0e3159456f98de2bcd1'  => 'adbless',
