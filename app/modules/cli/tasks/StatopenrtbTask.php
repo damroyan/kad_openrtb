@@ -6,6 +6,12 @@ use Tizer\Console;
 
 class StatopenrtbTask extends \Phalcon\Cli\Task
 {
+    /**
+     * Парсинг статы и складывание ее в БД
+     *
+     * @param $params
+     * @throws \Exception
+     */
     public function parseAction($params)
     {
         $params = $this->getParams($params);

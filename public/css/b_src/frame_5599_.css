@@ -1,0 +1,91 @@
+#container_frame_5599 {
+    position: relative;
+    display: block;
+    height: auto;
+    overflow: visible;
+
+}
+#container_frame_5599 .list-container {
+    padding: 0 !important;
+    position: relative !important;
+    text-align: center;
+    vertical-align: top !important;
+    margin: 0 auto;
+    border-style: solid;
+    border-width: 0px;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    line-height: 100% !important;
+    transition: none !important;
+    box-sizing: border-box;
+}
+#container_frame_5599 .list-container-item {
+    position: relative;
+    padding: 3px;
+    border-color: transparent;
+    border: none !important;
+    min-width: 230px;
+    vertical-align: top;
+    background: none repeat scroll 0 0;
+    cursor: pointer;
+    display: inline-block;
+    _overflow: hidden;
+    padding: 0 !important;
+    border-style: solid;
+    border-color: #b71c1c;
+    border-width: 0px;
+    max-width: 99%;
+    box-sizing: border-box;
+    margin: 6px 0.5%;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+#container_frame_5599 .list-container-item .innerWrap{
+}
+#container_frame_5599 .list-container-item .imgFrame {
+    box-sizing: border-box;
+    width: 102px;
+    display: inline-block;
+    vertical-align: inherit;
+    float: left;
+}
+#container_frame_5599 .list-container-item .imgFrame > div {
+    background-position: center center;
+    background-size: 150px auto !important;
+    background-repeat: no-repeat;
+    display: block;
+    width: 102px;
+    height: 102px;
+}
+#container_frame_5599 .list-container-item .title {
+    float:left;
+    word-wrap: break-word;
+    width: 135px;
+    margin-left: 3px;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 15px;
+    font-style: normal;
+    text-decoration: none;
+    color: #000000;
+    font-family: Arial,Helvetica,sans-serif;
+    cursor: pointer;
+    text-align: left;
+}
+#container_frame_5599 .list-container-item .title:hover {
+
+}
+#container_frame_5599 .list-container-item .clear {
+
+}
