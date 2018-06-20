@@ -6,7 +6,7 @@ var jolly_settings_1537 = {
     partner_id : '2f3a4fccca6406e35bcf33e92dd93135',
     count : 3,
     url: url
-    ,source: 'rp_cinema'
+   // ,source: 'rp_cinema'
 };
 
 if (typeof jolly_callback_1537 === "undefined") {
