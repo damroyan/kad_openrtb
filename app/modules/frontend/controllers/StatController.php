@@ -40,24 +40,24 @@ class StatController extends \Phalcon\Mvc\Controller
                 'money' => 0.65,
             ],
             'f08dfd477b90159ac5cef98cebe1ee90'  => [
-                'init'  => 1,
-                'money' => 1,
+                'init'  => 0.8,
+                'money' => 0.65,
             ],
             '31698b6796a85f7781e6ae8227856659'  => [
-                'init'  => 1,
-                'money' => 1,
+                'init'  => 0.8,
+                'money' => 0.65,
             ],
             '3fbedfa6485396a0270f537c792fc525'  => [
-                'init'  => 1,
-                'money' => 1,
+                'init'  => 0.8,
+                'money' => 0.65,
             ],
             '2aa225f1f6acc0e3159456f98de2bcd1'  => [
-                'init'  => 1,
-                'money' => 1,
+                'init'  => 0.8,
+                'money' => 0.65,
             ],
             '2f3a4fccca6406e35bcf33e92dd93135'  => [
-                'init'  => 1,
-                'money' => 1,
+                'init'  => 0.8,
+                'money' => 0.65,
             ],
         ];
 
