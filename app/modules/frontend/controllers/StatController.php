@@ -65,7 +65,7 @@ class StatController extends \Phalcon\Mvc\Controller
         if (count($stat) > 0) {
             foreach ($stat as $values) {
                 $date   = date('Y-m-d',strtotime($values['stat_openrtb_date']));
-                $money  = $values['stat_openrtb_money']*$koeff[$partner_id]['money'];
+                $money  = round($values['stat_openrtb_money']*$koeff[$partner_id]['money'],1);
                 $init   = floor($values['stat_openrtb_init']*$koeff[$partner_id]['init']);
 
                 if (!isset($result[$date])) {
