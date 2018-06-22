@@ -1,11 +1,9 @@
 // politexpert - right-col x3
 
-var url = window.location.href.toString().substr(0, 512);
-
 var jolly_settings_1537 = {
     partner_id : '2f3a4fccca6406e35bcf33e92dd93135',
     count : 3,
-    url: url
+    url: window.location.href.toString().substr(0, 512),
    // ,source: 'rp_cinema'
 };
 
@@ -168,15 +166,18 @@ function fn_parseUrl(value) {
     }
 }
 
-(function jolly_insert_1537() {
+function jolly_init_1537() {
 
-    let parts = fn_parseUrl(url);
+    console.log("Jolly, Insert please");
+
+    let parts = fn_parseUrl(jolly_settings_1537.url);
     console.log(parts);
     if (typeof parts === 'undefined') {
         return;
     }
     (parts.host).replace(/^www\./, '');
 
+    console.log("Try Jquery");
     try {
         if ((typeof jQuery === 'undefined') || (!jQuery.fn.jquery)) {
             var img = document.createElement("img");
@@ -187,7 +188,7 @@ function fn_parseUrl(value) {
         return;
     }
 
-    console.log($(content_block+' p').length);
+    console.log("Jquery OK. Host: " + parts.host);
     switch (parts.host) {
         case 'tizer.local':
             var content_block = '.article-text-body';
@@ -248,4 +249,9 @@ function fn_parseUrl(value) {
 
 
     return false;
+};
+
+(function() {
+    console.log('MAGIC HERE AT ');
+    setTimeout(jolly_init_1537,3000);
 })();
