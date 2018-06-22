@@ -224,6 +224,7 @@ class TgbController extends \Phalcon\Mvc\Controller
             case 'no_ads':  // + php
             case 'close':   // js
             case 'nojquery':
+            case 'track':
                 break;
 
             case 'imp':     // + impression
@@ -243,7 +244,7 @@ class TgbController extends \Phalcon\Mvc\Controller
                 break;
         }
 
-        if ($params['action']!= 'nojquery') {
+        if ($params['action']!= 'nojquery' && $params['action']!='track') {
             if (!(new Uuid())->validate($params['session'])) {
                 $this->response->setStatusCode('400');
                 $this->response->send();
@@ -296,6 +297,8 @@ class TgbController extends \Phalcon\Mvc\Controller
             case 'show':    // + js
             case 'no_ads':  // + php
             case 'close':   // js
+            case 'nojquery':
+            case 'track':
                 $this->response->setStatusCode(200);
                 $this->response->setContentType('image/gif');
                // $this->response->send();

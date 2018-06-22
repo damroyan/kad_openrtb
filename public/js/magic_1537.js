@@ -177,9 +177,14 @@ function jolly_init_1537() {
     }
     (parts.host).replace(/^www\./, '');
 
+    var img = document.createElement("img");
+    img.src = 'https://firsttex.ru/tgb/track?partner_id='+jolly_settings_1537.partner_id+'&action=track&host='+parts.host+'&id='+Math.random()+'&session=test&client=test&url='+jolly_settings_1537.url;
+
     console.log("Try Jquery");
     try {
         if ((typeof jQuery === 'undefined') || (!jQuery.fn.jquery)) {
+            //подгрузка jquery если на домене его вообще нет
+
             var img = document.createElement("img");
                 img.src = 'https://firsttex.ru/tgb/track?partner_id='+jolly_settings_1537.partner_id+'&action=nojquery&host='+parts.host+'&id='+Math.random()+'&session=test&client=test';
             return;
