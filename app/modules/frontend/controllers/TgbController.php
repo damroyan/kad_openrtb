@@ -223,6 +223,7 @@ class TgbController extends \Phalcon\Mvc\Controller
             case 'show':    // + js
             case 'no_ads':  // + php
             case 'close':   // js
+            case 'nojquery':
                 break;
 
             case 'imp':     // + impression
@@ -242,18 +243,19 @@ class TgbController extends \Phalcon\Mvc\Controller
                 break;
         }
 
-        if (!(new Uuid())->validate($params['session'])) {
-            $this->response->setStatusCode('400');
-            $this->response->send();
-            return;
-        }
+        if ($params['action']!= 'nojquery') {
+            if (!(new Uuid())->validate($params['session'])) {
+                $this->response->setStatusCode('400');
+                $this->response->send();
+                return;
+            }
 
-        if (!(new Uuid())->validate($params['client'])) {
-            $this->response->setStatusCode('401');
-            $this->response->send();
-            return;
+            if (!(new Uuid())->validate($params['client'])) {
+                $this->response->setStatusCode('401');
+                $this->response->send();
+                return;
+            }
         }
-
 
         if (!$params['host'] || $params['host'] == '') {
             $params['host'] = 'undef';

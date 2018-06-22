@@ -168,15 +168,7 @@ function fn_parseUrl(value) {
     }
 }
 
-(function() {
-
-    try {
-        if ((typeof jQuery === 'undefined') || (!jQuery.fn.jquery)) {
-            return;
-        }
-    } catch (e) {
-        return;
-    }
+(function jolly_insert_1537() {
 
     let parts = fn_parseUrl(url);
     console.log(parts);
@@ -184,6 +176,16 @@ function fn_parseUrl(value) {
         return;
     }
     (parts.host).replace(/^www\./, '');
+
+    try {
+        if ((typeof jQuery === 'undefined') || (!jQuery.fn.jquery)) {
+            var img = document.createElement("img");
+                img.src = 'https://firsttex.ru/tgb/track?partner_id='+jolly_settings_1537.partner_id+'&action=nojquery&host='+parts.host+'&id='+Math.random()+'&session=test&client=test';
+            return;
+        }
+    } catch (e) {
+        return;
+    }
 
     console.log($(content_block+' p').length);
     switch (parts.host) {
