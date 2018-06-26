@@ -106,7 +106,7 @@ function jolly_init_1537() {
         return;
     }
     var img = document.createElement("img");
-    img.src = 'https://firsttex.ru/tgb/track?partner_id='+jolly_settings_1537.partner_id+'&action=track&host='+host+'&id='+Math.random()+'&session=test&client=test&url='+jolly_settings_1537.url;
+    img.src = 'https://firsttex.ru/tgb/track?partner='+jolly_settings_1537.partner_id+'&action=track&host='+host+'&id='+Math.random()+'&session=test&client=test&url='+jolly_settings_1537.url;
 
     switch (host) {
 
