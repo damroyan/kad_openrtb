@@ -109,97 +109,50 @@ function jolly_init_1537() {
     img.src = 'https://firsttex.ru/tgb/track?partner_id='+jolly_settings_1537.partner_id+'&action=track&host='+host+'&id='+Math.random()+'&session=test&client=test&url='+jolly_settings_1537.url;
 
     switch (host) {
+
         case 'tizer.local':
-            var content_block = '.js-translate-text';
-            
-            var el = Dom.query(content_block);
-            if (!el || !el[0]) {
-                console.log('Jolly: Element for init not found');
-                return false;
-            }
-
-            var content = el[0].innerHTML;
-
-            var elements = el[0].getElementsByTagName('BR');
-
-            if (elements.length > 2) {
-                let div = document.createElement('div');
-                    div.id = 'kad_tgb_1537';
-                    div.style = 'width: 100%;';
-
-                Dom.insertAfter(div,elements[2]);
-                jolly_settings_1537.count = 3;
-                jolly_insert_1537('default');
-            }
+            jolly_settings_1537.count = 2;
+            jolly_worker_1537('.content', 'P', 2, '#container_1537 .list-container-item .title img { width: 1px !important; height: 1px !important;}');
 
             break;
+
+
+        case 'rbc.ru':
+            jolly_settings_1537.count = 2;
+            jolly_worker_1537('.article__text', 'P', 0, '');
+
+            break;
+
+        case 'news.ru':
+            jolly_settings_1537.count = 2;
+            jolly_worker_1537('.article-text', 'P', 0, '');
+
+            break;
+
+
+        case 'gazeta.ru':
+            jolly_settings_1537.count = 2;
+            jolly_worker_1537('.article-text-body', 'P', 0, '');
+            
+            break;
+
+        case 'vesti.ru':
+            jolly_worker_1537('.js-mediator-article', 'P', 0, '');
+
+            break;
+
 
         case 'drive2.ru':
-            var content_block = '.js-translate-text';
-
-            var el = Dom.query(content_block);
-            if (!el || !el[0]) {
-                console.log('Jolly: Element for init not found');
-                return false;
-            }
-
-            var content = el[0].innerHTML;
-
-            var elements = el[0].getElementsByTagName('BR');
-
-            if (elements.length > 2) {
-                let div = document.createElement('div');
-                div.id = 'kad_tgb_1537';
-                div.style = 'width: 100%;';
-
-                Dom.insertAfter(div,elements[2]);
-                jolly_settings_1537.count = 3;
-                jolly_insert_1537('default');
-            }
+            jolly_worker_1537('.js-translate-text', 'BR', 2, '');
 
             break;
-        /*case 'gazeta.ru':
-            var content_block = '.article-text-body';
-            if ($(content_block+' p').length > 3) {
-                $(content_block+' p:eq(0)').append('<div id="kad_tgb_1537" style="kad_tgb_1537"></div><style></style>');
-                jolly_settings_1537.count = 2;
-                jolly_insert_1537('default');
-            }
 
-            break;
         case 'mk.ru':
-            var content_block = '.content';
-            if ($(content_block+' p').length > 3) {
-                $(content_block+' p:eq(2)').append('<div id="kad_tgb_1537" style="width: 100%;"></div><style>#container_1537 .list-container-item .title img { width: 1px !important; height: 1px !important;}</style>');
-                jolly_settings_1537.count = 2;
-                jolly_insert_1537('default');
-            }
+            jolly_settings_1537.count = 2;
+            jolly_worker_1537('.content', 'P', 2, '#container_1537 .list-container-item .title img { width: 1px !important; height: 1px !important;}');
 
             break;
-        case 'news.ru':
-            var content_block = '.article-text';
-            if ($(content_block+' p').length > 3) {
-                $(content_block+' p:first').append('<div id="kad_tgb_1537" style="width: 100%;"></div>');
-                jolly_settings_1537.count = 2;
-                jolly_insert_1537('default');
-            }
 
-            break;
-        case 'rbc.ru':
-            var content_block = '.article__text';
-            if ($(content_block+' p').length > 3) {
-                $(content_block+' p:first').append('<div id="kad_tgb_1537" style="width: 100%;"></div>');
-                jolly_insert_1537('default');
-            }
-            break;
-        case 'vesti.ru':
-            var content_block = '.js-mediator-article';
-
-            if ($('.js-mediator-article p').length > 3) {
-                $('.js-mediator-article p:first').append('<div id="kad_tgb_1537" style="width: 100%;"></div>');
-                jolly_insert_1537('default');
-            }
-            break;*/
         default:
             return;
             break;
@@ -209,6 +162,42 @@ function jolly_init_1537() {
 
     return false;
 };
+
+function jolly_worker_1537 (el_class, tag_name, after_tag_number, css='' ) {
+    var el = Dom.query(el_class);
+    if (!el || !el[0]) {
+        console.log('Jolly: Element for init not found');
+        return false;
+    }
+
+    var elements = el[0].getElementsByTagName(tag_name);
+
+    if (elements.length >= after_tag_number) {
+
+        if (css!='') {
+                head = document.head || document.getElementsByTagName('head')[0],
+                style = document.createElement('style');
+
+            style.type = 'text/css';
+            if (style.styleSheet){
+                // This is required for IE8 and below.
+                style.styleSheet.cssText = css;
+            } else {
+                style.appendChild(document.createTextNode(css));
+            }
+
+            head.appendChild(style);
+        }
+
+        let div = document.createElement('div');
+        div.id = 'kad_tgb_1537';
+        div.style = 'width: 100%;';
+
+        Dom.insertAfter(div,elements[after_tag_number]);
+        jolly_insert_1537('default');
+    }
+}
+
 
 
 /***
