@@ -111,8 +111,14 @@ function jolly_init_1537() {
     switch (host) {
 
         case 'tizer.local':
-            jolly_settings_1537.count = 4;
-            jolly_worker_1537('.product-name', 'SPAN', 0, '#container_1537 .list-container-item {width: 25% !important}');
+            jolly_settings_1537.count = 2;
+            jolly_worker_1537('.article-text', 'DIV', 4, '');
+
+            break;
+
+        case 'woman.ru':
+            jolly_settings_1537.count = 2;
+            jolly_worker_1537('.article-text', 'DIV', 4, '');
 
             break;
 
