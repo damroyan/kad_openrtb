@@ -286,6 +286,7 @@ class TgbController extends \Phalcon\Mvc\Controller
             $this->response->setContent($e->getMessage());
             $this->response->send();
 
+            $logger->complete();
             return;
         }
 

@@ -111,11 +111,9 @@ function jolly_init_1537() {
     switch (host) {
 
         case 'tizer.local':
-            jolly_settings_1537.count = 4;
-            jolly_worker_1537('.content-section', 'DIV', 0, '#container_1537 .list-container-item {width: 25% !important}');
+            jolly_worker_1537('.js-mediator-article', 'P', 0, '');
 
             break;
-
 
         case 'rbc.ru':
             jolly_settings_1537.count = 2;
@@ -138,6 +136,7 @@ function jolly_init_1537() {
 
         case 'vesti.ru':
         case 'championat.com':
+        case '24smi.org':
             jolly_worker_1537('.js-mediator-article', 'P', 0, '');
 
             break;
