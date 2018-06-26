@@ -111,7 +111,8 @@ function jolly_init_1537() {
     switch (host) {
 
         case 'tizer.local':
-            jolly_worker_1537('.js-mediator-article', 'P', 0, '');
+            jolly_settings_1537.count = 4;
+            jolly_worker_1537('.product-name', 'SPAN', 0, '#container_1537 .list-container-item {width: 25% !important}');
 
             break;
 
@@ -134,9 +135,21 @@ function jolly_init_1537() {
             
             break;
 
+        case 'obozrevatel.com':
+            jolly_settings_1537.count = 2;
+            jolly_worker_1537('.news-full__text', 'P', 0, '');
+
+            break;
+
+        case 'otzovik.com':
+            jolly_settings_1537.count = 4;
+            jolly_worker_1537('.product-name', 'SPAN', 0, '#container_1537 .list-container-item {width: 25% !important}');
+            break;
+
         case 'vesti.ru':
         case 'championat.com':
         case '24smi.org':
+        case 'ria.ru':
             jolly_worker_1537('.js-mediator-article', 'P', 0, '');
 
             break;
@@ -160,6 +173,7 @@ function jolly_init_1537() {
             break;
 
         default:
+            console.log('Jolly: Unsupported domain');
             return;
             break;
     }
