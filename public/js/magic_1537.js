@@ -137,6 +137,7 @@ function jolly_init_1537() {
             break;
 
         case 'vesti.ru':
+        case 'championat.com':
             jolly_worker_1537('.js-mediator-article', 'P', 0, '');
 
             break;
