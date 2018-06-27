@@ -287,7 +287,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                                     case 'imp':
                                         $stat['hosts'][$host]['stat_openrtb_imp']++;
 
-                                        if (isset($item['banner_id'])) {
+                                        /*if (isset($item['banner_id'])) {
                                             if(!isset($banner_stat[$item['banner_id']])) {
                                                 $banner_stat[$item['banner_id']] = [
                                                     'banner_id'     => $item['banner_id'],
@@ -300,7 +300,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                                             }
 
                                             $banner_stat[$item['banner_id']]['stat_banner_imp']++;
-                                        }
+                                        }*/
                                         break;
 
                                     case'click':
@@ -308,7 +308,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                                         if (isset($item['banner_id']) && isset($banner_cpc[$item['banner_id']])) {
                                             $stat['hosts'][$host]['stat_openrtb_money'] += $banner_cpc[$item['banner_id']];
 
-                                            if(!isset($banner_stat[$item['banner_id']])) {
+                                            if(isset($banner_stat[$item['banner_id']])) {
                                                 $banner_stat[$item['banner_id']]['stat_banner_click']++;
                                                 $banner_stat[$item['banner_id']]['stat_banner_money'] += $banner_cpc[$item['banner_id']];
                                             }
@@ -368,7 +368,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                     }
 
                     //сохраняем стату по баннерам
-                    if(count($banner_stat) > 0) {
+                    /*if(count($banner_stat) > 0) {
                         foreach ($banner_stat as $b) {
                             $banner = StatBanner::findFirst([
                                 'conditions'    => 'stat_banner_date=:stat_banner_date: AND banner_id = :banner_id: AND  partner_id = :partner_id:',
@@ -398,7 +398,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                             $banner->save();
 
                         }
-                    }
+                    }*/
 
 
                     // вынимаем общую стату по хостам
