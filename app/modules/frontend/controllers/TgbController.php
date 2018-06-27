@@ -301,6 +301,7 @@ class TgbController extends \Phalcon\Mvc\Controller
                 'action'            => $params['action'],
                 'partner'           => mb_strtolower($params['partner']),
                 'host'              => $params['host'],
+                'url'               => isset($params['url']) ? $params['url'] : null,
             ];
 
             $logger = new \Tizer\Logger($this->log_dir.strtolower($params['partner'])
