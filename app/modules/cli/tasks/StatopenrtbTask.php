@@ -282,6 +282,21 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                                     case 'request':
                                         $stat['hosts'][$host]['stat_openrtb_request']++;
                                         $banner_cpc[$item['id']] = $item['price_cpc'];
+
+                                        if (isset($item['banner_id'])) {
+                                            if(!isset($banner_stat[$item['banner_id']])) {
+                                                $banner_stat[$item['banner_id']] = [
+                                                    'banner_id'     => $item['banner_id'],
+                                                    'partner_id'    => $dir,
+                                                    'stat_banner_date'  => $date,
+                                                    'stat_banner_imp'   => 0,
+                                                    'stat_banner_money' => 0,
+                                                    'stat_banner_click' => 0,
+                                                ];
+                                            }
+
+                                            $banner_stat[$item['banner_id']]['stat_banner_text'] = $item['text'];
+                                        }
                                         break;
 
                                     case 'imp':
