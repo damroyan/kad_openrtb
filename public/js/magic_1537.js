@@ -111,8 +111,14 @@ function jolly_init_1537() {
     switch (host) {
 
         case 'tizer.local':
-            jolly_settings_1537.count = 2;
-            jolly_worker_1537('.article-text', 'DIV', 4, '');
+            jolly_settings_1537.count = 4;
+            jolly_worker_1537('.text', 'BR', -1, '#container_1537 .list-container-item {width: 25% !important}');
+
+            break;
+
+        case 'stihi.ru':
+            jolly_settings_1537.count = 4;
+            jolly_worker_1537('.text', 'BR', -1, '#container_1537 .list-container-item {width: 25% !important}');
 
             break;
 
@@ -133,7 +139,6 @@ function jolly_init_1537() {
             jolly_worker_1537('.article-text', 'P', 0, '');
 
             break;
-
 
         case 'gazeta.ru':
             jolly_settings_1537.count = 2;
@@ -198,7 +203,7 @@ function jolly_worker_1537 (el_class, tag_name, after_tag_number, css='' ) {
 
     var elements = el[0].getElementsByTagName(tag_name);
 
-    if (elements.length >= after_tag_number) {
+    if (elements.length >= after_tag_number || after_tag_number == -1) {
 
         if (css!='') {
                 head = document.head || document.getElementsByTagName('head')[0],
@@ -219,7 +224,12 @@ function jolly_worker_1537 (el_class, tag_name, after_tag_number, css='' ) {
         div.id = 'kad_tgb_1537';
         div.style = 'width: 100%;';
 
-        Dom.insertAfter(div,elements[after_tag_number]);
+        if (after_tag_number != -1) {
+            Dom.insertAfter(div,elements[after_tag_number]);
+        } else {
+            el[0].appendChild(div);
+        }
+
         jolly_insert_1537('default');
     }
 }
