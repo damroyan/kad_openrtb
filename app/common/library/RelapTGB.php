@@ -122,10 +122,19 @@ class RelapTGB {
             foreach ($blocks as $b) {
                 $data = json_decode($b['adm'], true);
 
+                $banner_id = 'undef';
+                if ($b['id']) {
+                    $parts = explode(':',$b['id']);
+                    if (count($parts)>=3) {
+                        $p = array_slice($parts,1);
+                        $banner_id = implode(':',$p);
+                    }
+                }
+
                 $return[] = [
                     'nurl'              => $b['nurl'],
                     'tracking_pixel'    => $this->trackUrl($b['nurl'],'imp', ['id' => $b['id']]),
-                    'url'               => $this->trackUrl($data['native']['link']['url'], 'click', ['id' => $b['id']]),
+                    'url'               => $this->trackUrl($data['native']['link']['url'], 'click', ['id' => $banner_id]),
                     'price_cpc'         => floatval($b['price_cpc']),
                     'ecpm'              => floatval($b['price']),
                     'id'                => $b['id'],
