@@ -24,9 +24,9 @@ class TgbController extends \Phalcon\Mvc\Controller
     public $log_dir = __DIR__.'/../../../../logs/';
 
     public $openrtb_sources = [
-        'rp_cinema'    => 'https://relap.io/openrtb/2_3/videocapcinema/bid_request',
-        'rp_capvideo'     => 'https://relap.io/openrtb/2_3/videocapvideo/bid_request',
-        'rp_cap'          => 'https://relap.io/openrtb/2_3/videocap/bid_request',
+        'rp_cinema'         => 'https://relap.io/openrtb/2_3/videocapcinema/bid_request',
+        'rp_capvideo'       => 'https://relap.io/openrtb/2_3/videocapvideo/bid_request',
+        'rp_cap'            => 'https://relap.io/openrtb/2_3/videocap/bid_request',
     ];
 
     public function initialize() {
