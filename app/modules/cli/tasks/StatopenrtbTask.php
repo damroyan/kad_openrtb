@@ -1,6 +1,7 @@
 <?php
 namespace Tizer\Modules\Cli\Tasks;
 
+use Tizer\Common\Models\StatBanner;
 use Tizer\Common\Models\StatOpenrtb;
 use Tizer\Console;
 use Tizer\Common\Models\Source;
@@ -246,6 +247,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                      */
 
                     $banner_cpc = [];
+                    $banner_stat = [];
                     if (($is_txt = is_file($file_log.'.txt')) || ($is_gz = is_file($file_log.'.txt.gz'))) {
 
                         $fopen = 'fopen';
@@ -276,25 +278,46 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                                 }
 
                                 switch ($item['action']) {
-                                    case 'request':
 
+                                    case 'request':
                                         $stat['hosts'][$host]['stat_openrtb_request']++;
                                         $banner_cpc[$item['id']] = $item['price_cpc'];
-
                                         break;
+
                                     case 'imp':
                                         $stat['hosts'][$host]['stat_openrtb_imp']++;
+
+                                        if (isset($item['banner_id'])) {
+                                            if(!isset($banner_stat[$item['banner_id']])) {
+                                                $banner_stat[$item['banner_id']] = [
+                                                    'banner_id'     => $item['banner_id'],
+                                                    'partner_id'    => $dir,
+                                                    'stat_banner_date'  => $date,
+                                                    'stat_banner_imp'   => 0,
+                                                    'stat_banner_money' => 0,
+                                                    'stat_banner_click' => 0,
+                                                ];
+                                            }
+
+                                            $banner_stat[$item['banner_id']]['stat_banner_imp']++;
+                                        }
                                         break;
+
                                     case'click':
                                         $stat['hosts'][$host]['stat_openrtb_click']++;
                                         if (isset($item['banner_id']) && isset($banner_cpc[$item['banner_id']])) {
                                             $stat['hosts'][$host]['stat_openrtb_money'] += $banner_cpc[$item['banner_id']];
+
+                                            if(!isset($banner_stat[$item['banner_id']])) {
+                                                $banner_stat[$item['banner_id']]['stat_banner_click']++;
+                                                $banner_stat[$item['banner_id']]['stat_banner_money'] += $banner_cpc[$item['banner_id']];
+                                            }
                                         }
                                         break;
+
                                     default:
                                         break;
                                 }
-
 
                                 // print_r($banner_cpc);
                             }
@@ -304,6 +327,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                         $fclose($f_log);
                     }
 
+                    // сохраняем stat_openrtb
                     if (count($stat['hosts'])) {
                         foreach ($stat['hosts'] as $host => $data) {
 
@@ -343,6 +367,41 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                         }
                     }
 
+                    //сохраняем стату по баннерам
+                    if(count($banner_stat) > 0) {
+                        foreach ($banner_stat as $b) {
+                            $banner = StatBanner::findFirst([
+                                'conditions'    => 'stat_banner_date=:stat_banner_date: AND banner_id = :banner_id: AND  partner_id = :partner_id:',
+                                'bind'          => [
+                                    'stat_banner_date'  => $date,
+                                    'banner_id'         => $b['banner_id'],
+                                    'partner_id'        => $b['partner_id'],
+                                ]
+                            ]);
+
+                            if (!$banner) {
+                                $banner = new StatBanner();
+                                $banner->assign([
+                                    'stat_banner_date'  => $date,
+                                    'banner_id'         => $b['banner_id'],
+                                    'partner_id'        => $b['partner_id'],
+                                ]);
+
+                            }
+
+                            $banner->assign([
+                                'stat_banner_imp'   => $b['stat_banner_imp'],
+                                'stat_banner_click' => $b['stat_banner_click'],
+                                'stat_banner_money' => $b['stat_banner_money'],
+                            ]);
+
+                            $banner->save();
+
+                        }
+                    }
+
+
+                    // вынимаем общую стату по хостам
                     if ($is_txt = is_file($file_track.'.txt')) {
 
                         $fopen = 'fopen';
