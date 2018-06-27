@@ -289,6 +289,10 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                                             $stat['hosts'][$host]['stat_openrtb_money'] += $banner_cpc[$item['banner_id']];
                                         }
                                         break;
+                                    case 'track':
+
+
+                                        break;
                                     default:
                                         break;
                                 }

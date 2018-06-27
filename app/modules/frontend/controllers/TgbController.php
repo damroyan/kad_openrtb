@@ -13,6 +13,12 @@ class TgbController extends \Phalcon\Mvc\Controller
         '3fbedfa6485396a0270f537c792fc525'  => 'advmaker',
         '2aa225f1f6acc0e3159456f98de2bcd1'  => 'adbless',
         '2f3a4fccca6406e35bcf33e92dd93135'  => 'magic',
+
+        //frames
+        '826056f90a060bfaafd60d98c55bb588'  => 'adulter_1',
+        '99f6fc8e38a5e962da486c645ec4f65b'  => 'adulter_2',
+        '7eccf1fed316da45eced1e1cd7900c80'  => 'main_1',
+        'aad78e67f876a337c488f884bc941894'  => 'main_2',
     ];
 
     public $log_dir = __DIR__.'/../../../../logs/';
@@ -333,3 +339,15 @@ class TgbController extends \Phalcon\Mvc\Controller
     }
 }
 
+
+
+/*
+194.105.107.145 - - [26/Jun/2018:18:04:22 +0200] "GET /tgb/track?
+id=1530027671%3A21696%3APKndHw&
+session=afb93078-b48e-42a0-b578-37306ad9053d&
+client=15b3ad43-a88e-4eaf-a4ba-b32049d0537b&
+url=https%3A%2F%2Frelap.io%2Fr%3Fr%3DsX_BPGQBhOVqxgSDHXI%253APKndHw%253AZsuNJQ%253AkCCEOg%253AFAKE0UID%253AWzJelw%253AaHR0cHM6Ly9maXRlcmlhLnJ1L3N0YXRqaS8xMi1mYWt0b3Ytby1wb3BlLWtvdG9yeWtoLW1ub2dpZS1uZS16bmF5dXQuaHRtbD91dG1fbWVkaXVtPXJlbGFwLWFkcm9vbSZ1dG1fY29udGVudD12OTU5NjkmdXRtX2NhbXBhaWduPWZpdGVyaWEtdWtyLWthejEyMTA5JnV0bV9zb3VyY2U9Zml0ZXJpYS11a3Ita2F6%253AwmlrkQ%253AeyJwciI6MC4wMDUsImFjIjoyMTY5NiwiYXBpIjoib3BlbnJ0YiIsInJyIjowLjAwNSwiYTIiOjEsImdzIjoiS1oiLCJpbSI6MCwiaXIiOjAsInVnIjoiS1oiLCJhbGciOjc0LCJwb3MiOjR9%253A2%253AhitiHQ%26_s%3DRW2Gtw&
+action=click&
+partner=50bd8c21bfafa6e4e962f6a948b1ef92&host=slovodel.com&crc=d09a5a18b46f6ece791214b41303a486 HTTP/1.0" 302 815 "https://slovodel.com/511214-ne-bylo-nikakogo-podarka-kravchuk-rasskazal-pochemu-khrushev-peredal-krym-ukraine?utm_source=24smi&utm_medium=referral&utm_term=605&utm_content=1704315&utm_campaign=2616" "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0"
+178.67.10.6 - - [26/Jun/2018:18:07:04 +0200] "GET /tgb/track?partner_id=2f3a4fccca6406e35bcf33e92dd93135&action=track&host=tophotels.ru&id=0.20319651987924958&session=test&client=test&url=https://tophotels.ru/hotel/al5014/media/gallery?photo_type=7 HTTP/1.0" 200 276 "https://tophotels.ru/hotel/al5014/media/gallery?photo_type=7" "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36"
+*/
