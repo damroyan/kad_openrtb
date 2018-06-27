@@ -123,9 +123,9 @@ class RelapTGB {
                 $data = json_decode($b['adm'], true);
 
                 $banner_id = 'undef';
-                if ($b['id']) {
-                    $parts = explode(':',$b['id']);
-                    if (count($parts)>=3) {
+                if (isset($b['id'])) {
+                    $parts = explode(':', $b['id']);
+                    if (count($parts)>=2) {
                         $p = array_slice($parts,1);
                         $banner_id = implode(':',$p);
                     }
