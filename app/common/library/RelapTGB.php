@@ -137,7 +137,7 @@ class RelapTGB {
                     'url'               => $this->trackUrl($data['native']['link']['url'], 'click', ['id' => $banner_id]),
                     'price_cpc'         => floatval($b['price_cpc']),
                     'ecpm'              => floatval($b['price']),
-                    'id'                => $b['id'],
+                    'id'                => $banner_id,
                     'host'              => $this->host,
                 ];
 
