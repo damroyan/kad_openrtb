@@ -113,6 +113,12 @@ function jolly_init_1537() {
 
         case 'tizer.local':
             jolly_settings_1537.count = 4;
+            jolly_worker_1537('.sub_right', 'P', -2, '#container_1537 .list-container-item {width: 25% !important}','vert4');
+
+            break;
+
+        case 'kino-teatr.ru':
+            jolly_settings_1537.count = 4;
             jolly_worker_1537('.right_col', 'P', -2, '#container_1537 .list-container-item {width: 25% !important}','vert4');
 
             break;
@@ -131,6 +137,12 @@ function jolly_init_1537() {
 
         case 'rbc.ru':
             jolly_settings_1537.count = 2;
+            jolly_worker_1537('.article__text', 'P', 0, '');
+
+            break;
+
+        case 'russian.rt.com':
+            jolly_settings_1537.count = 3;
             jolly_worker_1537('.article__text', 'P', 0, '');
 
             break;
