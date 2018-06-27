@@ -413,7 +413,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                                 'stat_banner_imp'   => $b['stat_banner_imp'],
                                 'stat_banner_click' => $b['stat_banner_click'],
                                 'stat_banner_money' => $b['stat_banner_money'],
-                                'stat_banner_text'  => $b['stat_banner_text'],
+                                'stat_banner_text'  => params_has_or_null($b['stat_banner_text']),
                             ]);
 
                             $banner->save();
