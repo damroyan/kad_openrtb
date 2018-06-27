@@ -186,7 +186,8 @@ class TgbController extends \Phalcon\Mvc\Controller
                 'price_cpc'         => $b['price_cpc'],
                 'price_ecpm'        => $b['ecpm'],
                 'id'                => $b['id'],
-                'host'              => $b['host']
+                'host'              => $b['host'],
+                'text'              => $b['text'],
             ];
 
             try {
