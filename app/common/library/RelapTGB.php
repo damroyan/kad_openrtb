@@ -125,15 +125,14 @@ class RelapTGB {
                 $banner_id = 'undef';
                 if (isset($b['id'])) {
                     $parts = explode(':', $b['id']);
-                    if (count($parts)>=2) {
-                        $p = array_slice($parts,1);
-                        $banner_id = implode(':',$p);
-                    }
+                    $p = array_slice($parts,1);
+                    $banner_id = implode(':',$p);
+
                 }
 
                 $return[] = [
                     'nurl'              => $b['nurl'],
-                    'tracking_pixel'    => $this->trackUrl($b['nurl'],'imp', ['id' => $b['id']]),
+                    'tracking_pixel'    => $this->trackUrl($b['nurl'],'imp', ['id' =>$banner_id]),
                     'url'               => $this->trackUrl($data['native']['link']['url'], 'click', ['id' => $banner_id]),
                     'price_cpc'         => floatval($b['price_cpc']),
                     'ecpm'              => floatval($b['price']),
