@@ -7,6 +7,7 @@ class TgbController extends \Phalcon\Mvc\Controller
 {
 
     public $partners = [
+
         '50bd8c21bfafa6e4e962f6a948b1ef92'  => 'fan',
         'f08dfd477b90159ac5cef98cebe1ee90'  => 'fan_3399_test',
         '31698b6796a85f7781e6ae8227856659'  => 'megapolisonline.ru',

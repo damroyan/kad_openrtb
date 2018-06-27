@@ -3,6 +3,7 @@ namespace Tizer\Modules\Cli\Tasks;
 
 use Tizer\Common\Models\StatOpenrtb;
 use Tizer\Console;
+use Tizer\Common\Models\Source;
 
 class StatopenrtbTask extends \Phalcon\Cli\Task
 {
@@ -111,6 +112,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
 
                     $file_init = $logsDir.$dir.'/init_'.$date;
                     $file_log = $logsDir.$dir.'/log_'.$date;
+                    $file_track = $logsDir.$dir.'/track_'.$date;
 
                     $stat = [
                         'stat_openrtb_date'  => $date,
@@ -289,10 +291,6 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                                             $stat['hosts'][$host]['stat_openrtb_money'] += $banner_cpc[$item['banner_id']];
                                         }
                                         break;
-                                    case 'track':
-
-
-                                        break;
                                     default:
                                         break;
                                 }
@@ -345,7 +343,66 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
                         }
                     }
 
-                    print_r($stat);
+                    if ($is_txt = is_file($file_track.'.txt')) {
+
+                        $fopen = 'fopen';
+                        $fgets = 'fgets';
+                        $fclose = 'fclose';
+                        $file_track = $file_track.'.txt';
+                        $traffic = [];
+
+                        $f_track = $fopen($file_track,'r');
+                        while (($line = $fgets($f_track, 4096)) !== false) {
+
+
+                            $data_arr = $this->csv2array($line, false);
+
+                            if (count($data_arr)) {
+                                $item = $data_arr[0];
+
+                                $host = 'undef';
+                                if (isset($item['host'])) {
+                                    $host = $item['host'];
+                                }
+
+                                if (!isset($traffic[$host])) {
+                                    $traffic[$host] = [
+                                        'source_date'       => $date,
+                                        'source_partner'    => $dir,
+                                        'source_host'       => $host,
+                                        'source_traffic'    => 0,
+                                    ];
+                                }
+
+                                $traffic[$host]['source_traffic']++;
+                            }
+                        }
+                        $fclose($f_track);
+
+
+                        if (count($traffic) > 0) {
+                            foreach ($traffic as $host) {
+
+                                $db_line = Source::findFirst([
+                                    'conditions'    => 'source_date = :source_date: AND source_host = :source_host:',
+                                    'bind'          => [
+                                        'source_date'   => $host['source_date'],
+                                        'source_host'          => $host['source_host'],
+                                    ]
+                                ]);
+
+                                if (!$db_line) {
+                                    $db_line = new Source();
+                                }
+
+                                $db_line->assign($host);
+                                $db_line->save();
+
+                            }
+                        }
+
+                    }
+                        print_r($stat);
                 }
             }
         }
@@ -378,7 +435,7 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
         $array = [];
         if (count($contentArray)) {
             foreach ($contentArray as $line) {
-                if (trim($line[0]) == '') {
+                if (trim($line[0]) == '' || !isset($line[2])) {
                     continue;
                 }
                 $array[] = json_decode($line[2], true);
