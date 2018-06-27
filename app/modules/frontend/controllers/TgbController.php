@@ -229,7 +229,6 @@ class TgbController extends \Phalcon\Mvc\Controller
             case 'show':    // + js
             case 'no_ads':  // + php
             case 'close':   // js
-            case 'nojquery':
             case 'track':
                 break;
 
@@ -250,7 +249,11 @@ class TgbController extends \Phalcon\Mvc\Controller
                 break;
         }
 
-        if ($params['action']!= 'nojquery' && $params['action']!='track') {
+        if (!$params['host'] || $params['host'] == '') {
+            $params['host'] = 'undef';
+        }
+
+        if ($params['action']!='track') {
             if (!(new Uuid())->validate($params['session'])) {
                 $this->response->setStatusCode('400');
                 $this->response->send();
@@ -262,41 +265,66 @@ class TgbController extends \Phalcon\Mvc\Controller
                 $this->response->send();
                 return;
             }
-        }
 
-        if (!$params['host'] || $params['host'] == '') {
-            $params['host'] = 'undef';
-        }
 
-        $message = [
-            'action'            => $params['action'],
-            'banner_id'         => $params['id'],
-            'partner'           => mb_strtolower($params['partner']),
-            'session'           => mb_strtolower($params['session']),
-            'client'            => mb_strtolower($params['client']),
-            'ip'                => \Tizer\RelapTGB::getIp(),
-            'ua'                => mb_substr(mb_strtolower($_SERVER['HTTP_USER_AGENT']), 0, 512),
-            'url'               => isset($params['url']) ? $params['url'] : null,
-            'host'              => $params['host'],
+            $message = [
+                'action'            => $params['action'],
+                'banner_id'         => $params['id'],
+                'partner'           => mb_strtolower($params['partner']),
+                'session'           => mb_strtolower($params['session']),
+                'client'            => mb_strtolower($params['client']),
+                'ip'                => \Tizer\RelapTGB::getIp(),
+                'ua'                => mb_substr(mb_strtolower($_SERVER['HTTP_USER_AGENT']), 0, 512),
+                'url'               => isset($params['url']) ? $params['url'] : null,
+                'host'              => $params['host'],
 
-        ];
+            ];
 
-        $logger = new \Tizer\Logger($this->log_dir.strtolower($params['partner']));
-        try {
-            $logger->log(
-                json_encode($message, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT)
-            );
-        }
-        catch (\Exception $e) {
-            $this->response->setStatusCode('500');
-            $this->response->setContent($e->getMessage());
-            $this->response->send();
+            $logger = new \Tizer\Logger($this->log_dir.strtolower($params['partner']));
+            try {
+                $logger->log(
+                    json_encode($message, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT)
+                );
+            }
+            catch (\Exception $e) {
+                $this->response->setStatusCode('500');
+                $this->response->setContent($e->getMessage());
+                $this->response->send();
+
+                $logger->complete();
+                return;
+            }
 
             $logger->complete();
-            return;
+        } else {
+            $message = [
+                'action'            => $params['action'],
+                'partner'           => mb_strtolower($params['partner']),
+                'host'              => $params['host'],
+            ];
+
+            $logger = new \Tizer\Logger($this->log_dir.strtolower($params['partner'])
+                 ,\Tizer\Logger::INFO
+                 , ['prefix'=>'track_']);
+            try {
+                $logger->log(
+                    json_encode($message, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT)
+
+                );
+            }
+            catch (\Exception $e) {
+                $this->response->setStatusCode('500');
+                $this->response->setContent($e->getMessage());
+                $this->response->send();
+
+                $logger->complete();
+                return;
+            }
+
+            $logger->complete();
         }
 
-        $logger->complete();
+
         switch ($params['action']) {
             case 'request': // + php
             case 'error':   // + php
@@ -349,5 +377,6 @@ client=15b3ad43-a88e-4eaf-a4ba-b32049d0537b&
 url=https%3A%2F%2Frelap.io%2Fr%3Fr%3DsX_BPGQBhOVqxgSDHXI%253APKndHw%253AZsuNJQ%253AkCCEOg%253AFAKE0UID%253AWzJelw%253AaHR0cHM6Ly9maXRlcmlhLnJ1L3N0YXRqaS8xMi1mYWt0b3Ytby1wb3BlLWtvdG9yeWtoLW1ub2dpZS1uZS16bmF5dXQuaHRtbD91dG1fbWVkaXVtPXJlbGFwLWFkcm9vbSZ1dG1fY29udGVudD12OTU5NjkmdXRtX2NhbXBhaWduPWZpdGVyaWEtdWtyLWthejEyMTA5JnV0bV9zb3VyY2U9Zml0ZXJpYS11a3Ita2F6%253AwmlrkQ%253AeyJwciI6MC4wMDUsImFjIjoyMTY5NiwiYXBpIjoib3BlbnJ0YiIsInJyIjowLjAwNSwiYTIiOjEsImdzIjoiS1oiLCJpbSI6MCwiaXIiOjAsInVnIjoiS1oiLCJhbGciOjc0LCJwb3MiOjR9%253A2%253AhitiHQ%26_s%3DRW2Gtw&
 action=click&
 partner=50bd8c21bfafa6e4e962f6a948b1ef92&host=slovodel.com&crc=d09a5a18b46f6ece791214b41303a486 HTTP/1.0" 302 815 "https://slovodel.com/511214-ne-bylo-nikakogo-podarka-kravchuk-rasskazal-pochemu-khrushev-peredal-krym-ukraine?utm_source=24smi&utm_medium=referral&utm_term=605&utm_content=1704315&utm_campaign=2616" "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0"
-178.67.10.6 - - [26/Jun/2018:18:07:04 +0200] "GET /tgb/track?partner_id=2f3a4fccca6406e35bcf33e92dd93135&action=track&host=tophotels.ru&id=0.20319651987924958&session=test&client=test&url=https://tophotels.ru/hotel/al5014/media/gallery?photo_type=7 HTTP/1.0" 200 276 "https://tophotels.ru/hotel/al5014/media/gallery?photo_type=7" "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36"
+
+178.67.10.6 - - [26/Jun/2018:18:07:04 +0200] "GET /tgb/track?partner=2f3a4fccca6406e35bcf33e92dd93135&action=track&host=tophotels.ru&id=0.20319651987924958&session=test&client=test&url=https://tophotels.ru/hotel/al5014/media/gallery?photo_type=7 HTTP/1.0" 200 276 "https://tophotels.ru/hotel/al5014/media/gallery?photo_type=7" "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36"
 */
