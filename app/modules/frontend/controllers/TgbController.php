@@ -185,7 +185,7 @@ class TgbController extends \Phalcon\Mvc\Controller
                 'ip'                => \Tizer\RelapTGB::getIp(),
                 'price_cpc'         => $b['price_cpc'],
                 'price_ecpm'        => $b['ecpm'],
-                'id'                => $b['id'],
+                'banner_id'                => $b['id'],
                 'host'              => $b['host'],
                 'text'              => $b['text'],
             ];
