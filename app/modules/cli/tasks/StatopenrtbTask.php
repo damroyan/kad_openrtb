@@ -284,6 +284,8 @@ class StatopenrtbTask extends \Phalcon\Cli\Task
 
                                         if (isset($item['banner_id'])) {
                                             $banner_cpc[$item['banner_id']] = $item['price_cpc'];
+                                        } else if ( isset($item['id'] ) ) {
+                                            $banner_cpc[$item['id']] = $item['price_cpc'];
                                         }
 
                                         if (isset($item['banner_id'])) {
