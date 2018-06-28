@@ -3,8 +3,8 @@
 var jolly_settings_1537 = {
     partner_id : '2f3a4fccca6406e35bcf33e92dd93135',
     count : 3,
-    url: window.location.href.toString().substr(0, 512),
-   // ,source: 'rp_cinema'
+    url: window.location.href.toString().substr(0, 512)
+    ,source: 'rp_capplugin'
 };
 
 if (typeof jolly_callback_1537 === "undefined") {

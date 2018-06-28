@@ -28,6 +28,7 @@ class TgbController extends \Phalcon\Mvc\Controller
         'rp_cinema'         => 'https://relap.io/openrtb/2_3/videocapcinema/bid_request',
         'rp_capvideo'       => 'https://relap.io/openrtb/2_3/videocapvideo/bid_request',
         'rp_cap'            => 'https://relap.io/openrtb/2_3/videocap/bid_request',
+        'rp_capplugin'      => 'https://relap.io/openrtb/2_3/videocappluggin/bid_request',
     ];
 
     public function initialize() {
